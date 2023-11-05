@@ -1,3 +1,0 @@
-# .streamlit/secrets.toml
-[connections.gsheets]
-spreadsheet = "https://docs.google.com/spreadsheets/d/13tkOTMy9VuM0LMQVPD-HWzD5_ZxOyB8-XJmaPm0eF_g/edit?usp=sharing"
