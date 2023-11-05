@@ -32,6 +32,17 @@ def Obtem_Preco_Banco():
     return df_precos
 
 def Tela_Compra():
+    st.markdown(
+    """
+    <style>
+    [data-testid="collapsedControl"] {
+        display: none
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+    )
+
     Verifica_Compras_No_Session_State()
     st.session_state.name = st.session_state.name
     if "nomeimutavel" in st.session_state: ##foda!!

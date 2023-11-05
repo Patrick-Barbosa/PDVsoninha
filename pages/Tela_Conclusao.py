@@ -30,6 +30,16 @@ travaDuploClick = 0
 db_config.update(ssl_config)
     
 def Tela_Conclusao():
+    st.markdown(
+    """
+    <style>
+    [data-testid="collapsedControl"] {
+        display: none
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+    )
 
     st.title("Tela de Finalização de Compra")
     col1= st.columns([1,1])
