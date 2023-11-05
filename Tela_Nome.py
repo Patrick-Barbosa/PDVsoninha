@@ -32,16 +32,16 @@ def Nomes():
 
 def tela_inicial():
     st.set_page_config(initial_sidebar_state="collapsed")
-#    st.markdown(
- #   """
-  #  <style>
-   # [data-testid="collapsedControl"] {
-    #    display: none
-   # }
-  #  </style>
-  #  """,
- #   unsafe_allow_html=True,
-#    )
+    st.markdown(
+    """
+    <style>
+    [data-testid="collapsedControl"] {
+        display: none
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+    )
     nomes = Nomes()
     st.title("Ponto de Venda : Sonia Tech")
     st.subheader("Bem Vindo ao PDV da Sonia, o Famoso Sonia Tech")
