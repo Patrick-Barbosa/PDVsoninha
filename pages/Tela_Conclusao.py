@@ -101,11 +101,13 @@ def Finaliza_Compra(df, FlagPagamento):
         # Dedicando um thread exclusivo pra subir no banco e não haver falhas
         thread_envio = threading.Thread(target=Envia_Dados_BD, args=(df, FlagPagamento))
         thread_envio.start()
+        
 
     time.sleep(1)
     time.sleep(1)
 
     st.success("Venda Enviada com Sucesso")
+    st.balloons()
     time.sleep(2)
     Cancela_Compras()
         
