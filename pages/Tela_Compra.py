@@ -87,9 +87,9 @@ def Tela_Compra():
         else:
             switch_page("Tela_Conclusao")
     if butao_comprar_mais:
-        st.success(f"Compra de {st.session_state.quantity} de {st.session_state.product} com sucesso")
         st.session_state.Flag_Clicou_aqui = True
         Salva_Compra()
+        st.success(f"Compra de {st.session_state.quantity} de {st.session_state.product} com sucesso")
     Escreve_Compras()
     if butao_cancelar:
         Cancela_Compras()
