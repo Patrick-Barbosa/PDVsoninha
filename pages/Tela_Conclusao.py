@@ -69,8 +69,8 @@ def Tela_Conclusao():
     st.dataframe(dataframe, hide_index=True)
     col_but1,col_but2,col_but3= st.columns(3)
     
-    st.session_state.travaBotoes = 0
-
+    st.session_state.travaDuploClick = 0
+    
     with col_but1:
         butao_finaliza_compra = st.button("Finalizar a Compra", type='primary')
 
@@ -99,11 +99,12 @@ def Finaliza_Compra(df, FlagPagamento):
         thread_envio = threading.Thread(target=Envia_Dados_BD, args=(df, FlagPagamento))
         thread_envio.start()
         
-
     time.sleep(1)
     time.sleep(1)
+    
 
     st.success("Venda Enviada com Sucesso")
+    
     st.balloons()
     time.sleep(2)
     Cancela_Compras()
@@ -114,7 +115,6 @@ def Volta_Tela_Anterior():
 
 def Cancela_Compras():
     st.session_state.df_compras = pd.DataFrame(columns=["Nome", "Produto", "Quantidade","Preco"])
-    st.session_state.travaDuploClick = 0
     switch_page("Tela_Nome")
       
 def Envia_Dados_BD(df, FlagPagamento):
