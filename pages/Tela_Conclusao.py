@@ -68,9 +68,7 @@ def Tela_Conclusao():
 
     st.dataframe(dataframe, hide_index=True)
     col_but1,col_but2,col_but3= st.columns(3)
-    
-    st.session_state.travaDuploClick = 0
-    
+        
     with col_but1:
         butao_finaliza_compra = st.button("Finalizar a Compra", type='primary')
 

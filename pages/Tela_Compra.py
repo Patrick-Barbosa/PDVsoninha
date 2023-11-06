@@ -22,6 +22,7 @@ ssl_config = {
     }
 }
 db_config.update(ssl_config)
+st.session_state.travaDuploClick = 0
 
 def Obtem_Preco_Banco():
     conn = pymysql.connect(**db_config)
