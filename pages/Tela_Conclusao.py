@@ -23,9 +23,6 @@ ssl_config = {
     }
 }
 
-global travaDuploClick
-travaDuploClick = 0
-
 # Combinar as configurações
 db_config.update(ssl_config)
     
@@ -117,6 +114,7 @@ def Volta_Tela_Anterior():
 
 def Cancela_Compras():
     st.session_state.df_compras = pd.DataFrame(columns=["Nome", "Produto", "Quantidade","Preco"])
+    st.session_state.travaDuploClick = 0
     switch_page("Tela_Nome")
       
 def Envia_Dados_BD(df, FlagPagamento):
