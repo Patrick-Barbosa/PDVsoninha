@@ -97,7 +97,41 @@ if Filtro != None:
     dfFiltrado = df_nao_pago.loc[df_nao_pago['Nome'] == Filtro]
     divida = dfFiltrado['Valor'].sum()
     st.write(f'O total de dívidas é :red[R$: {divida}]')
-    df_editavel = st.data_editor(dfFiltrado[colunas_usadas], key='db', hide_index= True)
+    df_editavel = st.data_editor(
+        dfFiltrado[colunas_usadas],
+        key='db',
+        hide_index=True,
+        column_config={
+            "Pago": st.column_config.NumberColumn(
+                "Pago",
+                help="Valor pago",
+                min_value=0,  # ou o valor mínimo permitido
+                max_value=None,  # ou o valor máximo permitido
+                step=1,
+                format="%d",  # ou o formato desejado
+            ),
+            "Valor": st.column_config.TextColumn(
+                "Valor",
+                help="Valor fixo",
+                disabled=True,
+            ),
+            "Qtd": st.column_config.TextColumn(
+                "Qtd",
+                help="Quantidade",
+                disabled=True,
+            ),
+            "Item": st.column_config.TextColumn(
+                "Item",
+                help="Nome do item",
+                disabled=True,
+            ),
+            "Nome": st.column_config.TextColumn(
+                "Nome",
+                help="Nome do pagador",
+                disabled=True,
+            ),
+        }
+    )
 else:
     st.write('Filtre seu nome')
     
