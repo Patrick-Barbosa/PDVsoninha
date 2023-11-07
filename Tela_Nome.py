@@ -31,12 +31,14 @@ def Nomes():
     return df
 
 def tela_inicial():
-    st.set_page_config(initial_sidebar_state="collapsed", menu_items={
+    st.set_page_config(initial_sidebar_state="collapsed",page_title="Soninha Tech",  page_icon="🏪", menu_items={
         #'Get Help': 'Link',
         #'Report a bug': "Link",
-        'About': st.markdown("""# # Soninha Tech
-        Feito por Data Analytics, caso queira suporte, envie um e-mail para [data_analytics@grupotrigo.com.br](mailto:data_analytics@grupotrigo.com.br)"""
-        )    
+        'About': """#Soninha Tech
+        Feito por Data Analytics, caso queira suporte <br>
+        envie um e-mail para data_analytics@grupotrigo.com.br
+        """
+        'Help': 'data_analytics@grupotrigo.com.br'
     })
     st.markdown(
     """
