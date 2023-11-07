@@ -57,11 +57,10 @@ def tela_inicial():
     if butao_compra:
         switch_page("Tela_Compra")
         
-    st.markdown("<footer class=rodape>Feito por Data Analytics</footer>", unsafe_allow_html=True)
     st.markdown("""
             <style>
             footer {
-                visibility: hidden;
+                visibility: visible;
             }
             footer:after{
                 content: 'Feito por Data Analytics';
