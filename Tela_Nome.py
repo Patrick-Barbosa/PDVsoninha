@@ -34,9 +34,8 @@ def tela_inicial():
     st.set_page_config(initial_sidebar_state="collapsed",page_title="Soninha Tech",  page_icon="🏪", menu_items={
         'About': """#Soninha Tech
         Feito por Data Analytics, caso queira suporte
-        envie um e-mail para data_analytics@grupotrigo.com.br
-        """,
-        'Report a Bug': 'data_analytics@grupotrigo.com.br'
+        Envie um e-mail para data_analytics@grupotrigo.com.br
+        """
     })
     st.markdown(
     """
