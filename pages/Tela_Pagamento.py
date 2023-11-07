@@ -4,7 +4,6 @@ import ssl
 
 ## import normal :D
 import streamlit as st
-import streamlit_authenticator as stauth
 from datetime import datetime
 import pandas as pd
 import time
