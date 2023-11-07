@@ -83,7 +83,7 @@ def atualizar(base):
 def resetcheck():
     return False
 
-st.title('Consultor de Dívidas')
+st.title('Tela de Pagamento')
 colunas_usadas = ['Pago', 'Valor', 'Qtd', 'Item', 'Nome']
 df = base()
 #st.dataframe(df)
@@ -91,7 +91,7 @@ df_nao_pago = df_nao_pago = df[df['Pago'] == 0]
 df_nao_pago['Pago'] = df_nao_pago['Pago'].replace(0, False)
 valores_distintos_nome = df_nao_pago['Nome'].unique().tolist()
 
-Filtro = st.selectbox('Pessoa', valores_distintos_nome, placeholder='Filtre uma pessoa:', index=None, key = 'Filtro')
+Filtro = st.selectbox('Filtre seu nome:', valores_distintos_nome, placeholder='Selecione seu nome', index=None, key = 'Filtro')
 
 if Filtro != None:
     dfFiltrado = df_nao_pago.loc[df_nao_pago['Nome'] == Filtro]
@@ -104,7 +104,7 @@ if Filtro != None:
         column_config={
             "Valor": st.column_config.TextColumn(
                 "Valor",
-                help="Valor fixo",
+                help="Valor devido",
                 disabled=True,
             ),
             "Qtd": st.column_config.TextColumn(
@@ -124,8 +124,6 @@ if Filtro != None:
             ),
         }
     )
-else:
-    st.write('Filtre seu nome')
     
 st.divider()
 pagamento = st.selectbox('Opção de Pagamento:', ['Pagar linhas selecionadas', 'Pagar tudo'],placeholder="Selecione uma opção", index=None, disabled=selectboxpag(), key='pagamento')
@@ -144,7 +142,7 @@ if pagamento == 'Pagar linhas selecionadas':
             st.write(':red[Selecione uma linha para dar baixa.]')
         else:
             st.write(f'Deseja pagar a dívida de :red[R$:{soma_valores_pago}?], faça o pix para o telefone **123456789-10**')
-            st.write('Caso queira pagar outra linha, desmarque a linha atual e marque a linha desejada.')
+            st.write('💡 Caso queira pagar outra linha, desmarque a linha atual e marque a linha desejada.')
     except:
         st.error('Filtre outra pessoa')
 
