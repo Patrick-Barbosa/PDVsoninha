@@ -31,12 +31,24 @@ def Nomes():
     return df
 
 def tela_inicial():
-    st.set_page_config(initial_sidebar_state="collapsed")
+    st.set_page_config(initial_sidebar_state="collapsed", menu_items={
+        'Get Help': 'Link',
+        'Report a bug': "Link",
+        'About': "# This is a header. This is an *extremely* cool app!"
+    })
     st.markdown(
     """
     <style>
     [data-testid="collapsedControl"] {
         display: none
+    }
+    footer {
+        visibility: hidden;
+    }
+    footer:after{
+        content: 'Feito por Data Analytics';
+        visibility: visible;
+        display: block;
     }
     </style>
     """,
@@ -59,19 +71,7 @@ def tela_inicial():
         
     st.markdown("""
             <style>
-            footer {
-                visibility: hidden;
-            }
-            footer:after{
-                content: 'Feito por Data Analytics';
-                visibility: visible;
-                display: block;
-                position: relative;
-                #background-color: red;
-                padding: 5px;
-                top: 2px;
-                text-align: left;
-            }
+
             </style>
             """ , unsafe_allow_html=True)
 
