@@ -32,8 +32,8 @@ def Nomes():
 
 def tela_inicial():
     st.set_page_config(initial_sidebar_state="collapsed", menu_items={
-        'Get Help': 'Link',
-        'Report a bug': "Link",
+        #'Get Help': 'Link',
+        #'Report a bug': "Link",
         'About': "# This is a header. This is an *extremely* cool app!"
     })
     st.markdown(
