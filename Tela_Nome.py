@@ -60,7 +60,7 @@ def tela_inicial():
     st.markdown("""
             <style>
             footer {
-                visibility: visible;
+                visibility: hidden;
             }
             footer:after{
                 content: 'Feito por Data Analytics';
@@ -70,9 +70,7 @@ def tela_inicial():
                 #background-color: red;
                 padding: 5px;
                 top: 2px;
-                font-size: 0.8em;
-                text-align: center;
-                color: black;	
+                text-align: left;
             }
             </style>
             """ , unsafe_allow_html=True)
