@@ -102,14 +102,6 @@ if Filtro != None:
         key='db',
         hide_index=True,
         column_config={
-            "Pago": st.column_config.NumberColumn(
-                "Pago",
-                help="Valor pago",
-                min_value=0,  # ou o valor mínimo permitido
-                max_value=None,  # ou o valor máximo permitido
-                step=1,
-                format="%d",  # ou o formato desejado
-            ),
             "Valor": st.column_config.TextColumn(
                 "Valor",
                 help="Valor fixo",
