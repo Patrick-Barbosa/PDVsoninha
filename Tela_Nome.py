@@ -58,7 +58,25 @@ def tela_inicial():
         switch_page("Tela_Compra")
         
     st.markdown("<footer class=rodape>Feito por Data Analytics</footer>", unsafe_allow_html=True)
-
+    st.markdown("""
+            <style>
+            footer {
+                visibility: hidden;
+            }
+            footer:after{
+                content: 'Feito por Data Analytics';
+                visibility: visible;
+                display: block;
+                position: relative;
+                #background-color: red;
+                padding: 5px;
+                top: 2px;
+                font-size: 0.8em;
+                text-align: center;
+                color: black;	
+            }
+            </style>
+            """ , unsafe_allow_html=True)
 
 if __name__ == "__main__":
     tela_inicial()
