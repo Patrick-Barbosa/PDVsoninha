@@ -56,7 +56,8 @@ def tela_inicial():
     nome = st.session_state.name
     if butao_compra:
         switch_page("Tela_Compra")
-    st.markdown("<div class='footer'>Feito por Data Analytics</div>", unsafe_allow_html=True)
+        
+    st.markdown("<footer class=rodape>Feito por Data Analytics</footer>", unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
