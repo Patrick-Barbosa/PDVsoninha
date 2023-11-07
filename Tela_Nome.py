@@ -34,8 +34,9 @@ def tela_inicial():
     st.set_page_config(initial_sidebar_state="collapsed", menu_items={
         #'Get Help': 'Link',
         #'Report a bug': "Link",
-        'About': """# # Soninha Tech
+        'About': st.markdown("""# # Soninha Tech
         Feito por Data Analytics, caso queira suporte, envie um e-mail para [data_analytics@grupotrigo.com.br](mailto:data_analytics@grupotrigo.com.br)"""
+        )    
     })
     st.markdown(
     """
