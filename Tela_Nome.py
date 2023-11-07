@@ -5,7 +5,6 @@ import ssl
 import pandas as pd
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
-import os
 
 db_config = {
     'host': st.secrets["DATABASE_HOST"],
@@ -47,7 +46,7 @@ def tela_inicial():
         visibility: hidden;
     }
     footer:after{
-        content: 'Feito por Data Analytics';
+        content: 'Feito por Data Analytics, João & Patrick';
         visibility: visible;
         display: block;
     }
@@ -70,11 +69,5 @@ def tela_inicial():
     if butao_compra:
         switch_page("Tela_Compra")
         
-    st.markdown("""
-            <style>
-
-            </style>
-            """ , unsafe_allow_html=True)
-
 if __name__ == "__main__":
     tela_inicial()
