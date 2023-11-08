@@ -45,8 +45,8 @@ def tela_inicial():
     footer {
         visibility: hidden;
     }
-    footer:after{
-        content: 'Feito por Data Analytics, João & Patrick';
+    footer:before{
+        content: 'João, Hugo & Patrick';
         visibility: visible;
         display: block;
     }
