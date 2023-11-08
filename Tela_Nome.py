@@ -46,7 +46,7 @@ def tela_inicial():
         visibility: hidden;
     }
     footer:before{
-        content: 'João, Hugo & Patrick';
+        content: '🧠 Feito por João, Hugo & Patrick';
         visibility: visible;
         display: block;
     }
