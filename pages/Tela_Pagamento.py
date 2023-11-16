@@ -175,4 +175,6 @@ if len(df_nao_pago) != 0:
 else:
     ## nenhuma divida encontrada
     st.balloons()
-    st.success('Nenhuma dívida encontrada')        
+    st.success('Nenhuma dívida encontrada')
+    time.sleep(3)
+    switch_page("Tela_Nome")
