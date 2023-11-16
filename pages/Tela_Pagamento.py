@@ -108,7 +108,7 @@ df = base(nome)
 df_nao_pago = df_nao_pago = df[df['Pago'] == 0]
 df_nao_pago['Pago'] = df_nao_pago['Pago'].replace(0, False)
 
-if df_nao_pago is not None:
+if len(df_nao_pago) != 0:
     divida = df_nao_pago['Valor'].sum()
     st.write(f'O total de dívidas é :red[R$: {divida}]')
     df_editavel = st.data_editor(
