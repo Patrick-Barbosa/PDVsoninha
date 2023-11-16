@@ -68,7 +68,7 @@ def tela_inicial():
     col1, col2, col3, col4 = st.columns(4)
     nome = st.session_state.name
     with col1:
-        butao_compra = st.button("Fazer Compra")
+        butao_compra = st.button("Fazer Compra", type="primary")
         if butao_compra:
             switch_page("Tela_Compra")
     with col2:

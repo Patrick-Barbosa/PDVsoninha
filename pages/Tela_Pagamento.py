@@ -100,7 +100,7 @@ else:
 
 st.title('Tela de Pagamento')
 st.caption('💡 Para pagar uma dívida, selecione as linhas na tabela ou selecione a opção abaixo para pagar tudo.')
-pagamento = st.selectbox('Deseja pagar tudo?:', ['Pagar linhas selecionadas', 'Pagar tudo'],placeholder="Selecione uma opção", index=None, disabled=selectboxpag(), key='pagamento')
+pagamento = st.selectbox('Deseja pagar tudo?:', ['Pagar linhas selecionadas', 'Pagar tudo'],placeholder="Selecione uma opção", index=None, key='pagamento')
 
 colunas_usadas = ['Pago', 'Valor', 'Qtd', 'Item', 'Nome']
 df = base(nome)
@@ -109,11 +109,10 @@ df_nao_pago = df_nao_pago = df[df['Pago'] == 0]
 df_nao_pago['Pago'] = df_nao_pago['Pago'].replace(0, False)
 
 if df_nao_pago != None:
-    dfFiltrado = df_nao_pago.loc[df_nao_pago['Nome'] == Filtro]
-    divida = dfFiltrado['Valor'].sum()
+    divida = df_nao_pago['Valor'].sum()
     st.write(f'O total de dívidas é :red[R$: {divida}]')
     df_editavel = st.data_editor(
-        dfFiltrado[colunas_usadas],
+        df_nao_pago[colunas_usadas],
         key='db',
         hide_index=True,
         column_config={
