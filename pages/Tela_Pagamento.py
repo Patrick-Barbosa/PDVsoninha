@@ -7,6 +7,8 @@ import streamlit as st
 from datetime import datetime
 import pandas as pd
 import time
+from streamlit_extras.switch_page_button import switch_page
+
 
 
 # Configurações do banco de dados
@@ -35,17 +37,11 @@ def des(key):
     else:
         return True
     
-def selectboxpag():
-    if Filtro != None:
-        return False
-    else:
-        return True
-
-def base():
+def base(nomeCliente):
     try:
         conn = pymysql.connect(**db_config)
         cursor = conn.cursor()
-        query = "SELECT * FROM fVendas"
+        query = f"SELECT * FROM fVendas WHERE Nome = '{nomeCliente}'"
         cursor.execute(query)
 
         # Obter os resultados
@@ -83,17 +79,24 @@ def atualizar(base):
 def resetcheck():
     return False
 
+st.session_state.name = st.session_state.name
+if "nomeimutavel" in st.session_state: ##foda!!
+    nome = st.session_state.nomeimutavel
+else:
+    nome = st.session_state.name
+
+
 st.title('Tela de Pagamento')
+st.caption('💡 Para pagar uma dívida, selecione as linhas na tabela ou selecione a opção abaixo para pagar tudo.')
+pagamento = st.selectbox('Deseja pagar tudo?:', ['Pagar linhas selecionadas', 'Pagar tudo'],placeholder="Selecione uma opção", index=None, disabled=selectboxpag(), key='pagamento')
+
 colunas_usadas = ['Pago', 'Valor', 'Qtd', 'Item', 'Nome']
-df = base()
-#st.dataframe(df)
+df = base(nome)
+
 df_nao_pago = df_nao_pago = df[df['Pago'] == 0]
 df_nao_pago['Pago'] = df_nao_pago['Pago'].replace(0, False)
-valores_distintos_nome = df_nao_pago['Nome'].unique().tolist()
 
-Filtro = st.selectbox('Filtre seu nome:', valores_distintos_nome, placeholder='Selecione seu nome', index=None, key = 'Filtro')
-
-if Filtro != None:
+if df_nao_pago != None:
     dfFiltrado = df_nao_pago.loc[df_nao_pago['Nome'] == Filtro]
     divida = dfFiltrado['Valor'].sum()
     st.write(f'O total de dívidas é :red[R$: {divida}]')
@@ -124,40 +127,41 @@ if Filtro != None:
             ),
         }
     )
-    
-st.divider()
-pagamento = st.selectbox('Opção de Pagamento:', ['Pagar linhas selecionadas', 'Pagar tudo'],placeholder="Selecione uma opção", index=None, disabled=selectboxpag(), key='pagamento')
-botao = st.button('Confirmar alterações', disabled=not des('pagamento'), type='primary')
-if pagamento == 'Pagar tudo':
-    try:
-        df_editavel['Pago'] = True
-        soma_valores_pago = df_editavel.loc[df_editavel['Pago'] == True, 'Valor'].sum()
-        st.write(f'Deseja aliviar a dívida de :red[R$:{soma_valores_pago}?]')
-    except:
-        st.error('Filtre outra pessoa')
-if pagamento == 'Pagar linhas selecionadas':
-    try:
-        soma_valores_pago = df_editavel.loc[df_editavel['Pago'] == True, 'Valor'].sum()
-        if soma_valores_pago == 0:
-            st.write(':red[Selecione uma linha para dar baixa.]')
-        else:
-            st.write(f'Deseja pagar a dívida de :red[R$:{soma_valores_pago}?], faça o pix para o telefone **123456789-10**')
-            st.write('💡 Caso queira pagar outra linha, desmarque a linha atual e marque a linha desejada.')
-    except:
-        st.error('Filtre outra pessoa')
+    st.divider()
+    botao = st.button('Confirmar alterações', disabled=not des('pagamento'), type='primary')
+    if pagamento == 'Pagar tudo':
+        try:
+            df_editavel['Pago'] = True
+            soma_valores_pago = df_editavel.loc[df_editavel['Pago'] == True, 'Valor'].sum()
+            st.write(f'Deseja aliviar a dívida de :red[R$:{soma_valores_pago}?]')
+        except:
+            st.error('Filtre outra pessoa')
+    if pagamento == 'Pagar linhas selecionadas':
+        try:
+            soma_valores_pago = df_editavel.loc[df_editavel['Pago'] == True, 'Valor'].sum()
+            if soma_valores_pago == 0:
+                st.write(':red[Selecione uma linha para dar baixa.]')
+            else:
+                st.write(f'Deseja pagar a dívida de :red[R$:{soma_valores_pago}?], faça o pix para o telefone **21 96475-0527**')
+        except:
+            st.error('Filtre outra pessoa')
 
-if botao:
-    if soma_valores_pago == 0:
-        st.error('Não é possível pagar uma dívida inexistente')
-    else:
-        df_nao_pago.update(df_editavel)
-        hoje = datetime.now().strftime('%Y-%m-%d')
-        df_nao_pago.loc[(df_nao_pago['Pago'] == True) & (df_nao_pago['DataPagamento'].isnull() | (df_nao_pago['DataPagamento'] == '')), 'DataPagamento'] = hoje
-        atualizar(df_nao_pago)
-        st.success('Dados atualizados!')
-        st.success(f'O valor de :red[R$:{soma_valores_pago}] foi pago!')
-        st.success('A página será atualizada em 5 segundos')
-        st.spinner()
-        time.sleep(5)
-        st.rerun()
-        
+    if botao:
+        if soma_valores_pago == 0:
+            st.error('❌ Nenhuma linha foi selecionada.')
+        else:
+            df_nao_pago.update(df_editavel)
+            hoje = datetime.now().strftime('%Y-%m-%d')
+            df_nao_pago.loc[(df_nao_pago['Pago'] == True) & (df_nao_pago['DataPagamento'].isnull() | (df_nao_pago['DataPagamento'] == '')), 'DataPagamento'] = hoje
+            atualizar(df_nao_pago)
+            st.success('Dados atualizados!')
+            st.balloons()
+            st.success(f'O valor de :red[R$:{soma_valores_pago}] foi pago!')
+            st.success('Você será redirecionado em 5 segundos')
+            st.spinner()
+            time.sleep(5)
+            switch_page("Tela_Nome")
+else:
+    ## nenhuma divida encontrada
+    st.balloons()
+    st.success('Nenhuma dívida encontrada')        
