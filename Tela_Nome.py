@@ -64,10 +64,17 @@ def tela_inicial():
     index = None,
     placeholder='Selecione seu nome'
     )
-    butao_compra = st.button("Fazer Compra")
+    
+    col1, col2, col3, col4 = st.columns(4)
     nome = st.session_state.name
-    if butao_compra:
-        switch_page("Tela_Compra")
+    with col1:
+        butao_compra = st.button("Fazer Compra")
+        if butao_compra:
+            switch_page("Tela_Compra")
+    with col2:
+        botao_pagemento = st.button("Pagamento")
+        if botao_pagemento:
+            switch_page("Tela_Pagamento")
         
 if __name__ == "__main__":
     tela_inicial()

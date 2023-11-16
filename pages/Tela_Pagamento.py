@@ -31,6 +31,18 @@ ssl_config = {
 # Combinar as configurações
 db_config.update(ssl_config)
 
+st.markdown(
+"""
+<style>
+[data-testid="collapsedControl"] {
+    display: none
+}
+</style>
+""",
+unsafe_allow_html=True,
+)
+
+
 def des(key):
     if st.session_state.get(key) == None:
         return False
