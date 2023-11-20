@@ -29,7 +29,7 @@ def Obtem_Preco_Banco():
     query = "SELECT * FROM dProdutos"
     df_precos = pd.read_sql(query, conn)
     conn.close()
-    df_precos = df_precos.sort_values('Data', ascending=False).drop_duplicates('Item')
+    df_precos = df_precos.sort_values('Data', ascending=False).drop_duplicates('Produto')
     return df_precos
 
 def Tela_Compra():
@@ -61,7 +61,7 @@ def Tela_Compra():
     with col1:
         product_input = st.selectbox(
     "Selecione o produto consumido",
-    df_precos['Item'],
+    df_precos['Produto'],
     key='product',
     index = None,
     placeholder='Selecione o produto'
@@ -100,7 +100,7 @@ def Salva_Compra():
     nome = st.session_state.name
     produto = st.session_state.product
     quantidade = st.session_state.quantity
-    preco = df_precos.query("Item==@produto")['Valor'].iloc[0] * quantidade
+    preco = df_precos.query("Produto==@produto")['Valor'].iloc[0] * quantidade
     
     #Alteraçõo feita para corrigir o erro de append usando concat
     nova_compra = pd.DataFrame({"Nome": [nome], "Produto": [produto], "Quantidade": [quantidade], "Preco": [preco]})

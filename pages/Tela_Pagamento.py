@@ -80,7 +80,7 @@ def atualizar(base):
         else:
             data_pagamento = f"'{row['DataPagamento']}'"
 
-        update_query = f"UPDATE fVendas SET `Data` = '{row['Data']}', Nome = '{row['Nome']}', Item = '{row['Item']}', Qtd = {row['Qtd']}, Valor = {row['Valor']}, Pago = {row['Pago']}, DataPagamento = {data_pagamento}, Registro = '{row['Registro']}' WHERE ID = {row['ID']}"
+        update_query = f"UPDATE fVendas SET `Data` = '{row['Data']}', Nome = '{row['Nome']}', Produto = '{row['Produto']}', Qtd = {row['Qtd']}, Valor = {row['Valor']}, Pago = {row['Pago']}, DataPagamento = {data_pagamento}, Registro = '{row['Registro']}' WHERE ID = {row['ID']}"
 
         # Executar a instrução SQL UPDATE
         cursor.execute(update_query)
@@ -100,7 +100,7 @@ else:
 
 st.title('Tela de Pagamento')
 
-colunas_usadas = ['Pago', 'Valor', 'Qtd', 'Item', 'Nome']
+colunas_usadas = ['Pago', 'Valor', 'Qtd', 'Produto', 'Nome']
 df = base(nome)
 
 df_nao_pago = df_nao_pago = df[df['Pago'] == 0]
@@ -126,9 +126,9 @@ if len(df_nao_pago) != 0:
                 help="Quantidade",
                 disabled=True,
             ),
-            "Item": st.column_config.TextColumn(
-                "Item",
-                help="Nome do item",
+            "Produto": st.column_config.TextColumn(
+                "Produto",
+                help="Nome do Produto",
                 disabled=True,
             ),
             "Nome": st.column_config.TextColumn(
