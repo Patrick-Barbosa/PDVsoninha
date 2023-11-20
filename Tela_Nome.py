@@ -69,11 +69,11 @@ def tela_inicial():
     nome = st.session_state.name
     with col1:
         butao_compra = st.button("Fazer Compra", type="primary")
-        if butao_compra:
+        if butao_compra and nome != None:
             switch_page("Tela_Compra")
     with col2:
         botao_pagemento = st.button("Pagamento")
-        if botao_pagemento:
+        if botao_pagemento and nome != None:
             switch_page("Tela_Pagamento")
         
 if __name__ == "__main__":
