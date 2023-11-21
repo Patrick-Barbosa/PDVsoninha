@@ -43,7 +43,7 @@ def Tela_Conclusao():
    
     
     dataframe = st.session_state.df_compras
-    valor_total = np.sum(dataframe['Quantidade'] * dataframe['Preco'])
+    valor_total = np.sum(dataframe['Preco'])
 
 
     if 'FlagPagamento' in dataframe.columns:
