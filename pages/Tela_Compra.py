@@ -86,10 +86,12 @@ def Tela_Compra():
             st.error("Você não cadastrou nenhuma compra!!!",icon="🚨")     
         else:
             switch_page("Tela_Conclusao")
-    if butao_comprar_mais:
+    if butao_comprar_mais and product_input != "Selecione o produto" and quantity_input != 0:
         st.session_state.Flag_Clicou_aqui = True
         Salva_Compra()
         st.success(f"Compra de {st.session_state.quantity} de {st.session_state.product} com sucesso")
+    else:
+        st.error("Você não selecionou nenhuma produto!!!", icon="🚨")
     Escreve_Compras()
     if butao_cancelar:
         Cancela_Compras()
