@@ -116,7 +116,7 @@ def Escreve_Compras():
     st.subheader("Compras Registradas:")
     if not st.session_state.df_compras.empty:
         st.write(st.session_state.df_compras)
-        Valor_Gasto = np.sum(st.session_state.df_compras['Preco']*st.session_state.df_compras['Quantidade'])
+        Valor_Gasto = np.sum(st.session_state.df_compras['Preco'])
         st.subheader(f"Gasto Total **{Valor_Gasto:.2f}**")
     else:
         st.text("Nenhuma compra registrada.")         
