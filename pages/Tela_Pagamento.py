@@ -32,15 +32,23 @@ ssl_config = {
 db_config.update(ssl_config)
 
 st.markdown(
-"""
-<style>
-[data-testid="collapsedControl"] {
-    display: none
-}
-</style>
-""",
-unsafe_allow_html=True,
-)
+    """
+    <style>
+    [data-testid="collapsedControl"] {
+        display: none
+    }
+    footer {
+        visibility: hidden;
+    }
+    footer:before{
+        content: '🧠 Feito por João, Hugo & Patrick';
+        visibility: visible;
+        display: block;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+    )
 
 
 def des(key):

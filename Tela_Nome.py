@@ -75,6 +75,7 @@ def tela_inicial():
         botao_pagemento = st.button("Pagar Dívidas", type="secondary")
         if botao_pagemento and nome != None:
             switch_page("Tela_Pagamento")
-        
+    st.divider()
+    st.markdown("[💡 Deseja participar dos testes do PDV? Preencha o formulário aqui](https://forms.office.com/r/xzXAmVbpEM)")
 if __name__ == "__main__":
     tela_inicial()
