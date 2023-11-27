@@ -58,23 +58,20 @@ def Tela_Conclusao():
         pass
     else:
         dataframe['FlagPagamento'] = False
-    
 
-        
     st.write(f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
     st.write('Faça o pagamento para o pix para o telefone **21 96475-0527**')
-    st.image('img/pix.png', width=600)
 
     FlagPagamento= st.radio("**Você já pagou?**",
                         ["Sim","Não"],
                         index=1)
-        
+    st.image('img/pix.png', width=600)
+
     if FlagPagamento == 'Sim':
             FlagPagamentoBool = True
     elif FlagPagamento == 'Não':
             FlagPagamentoBool = False
     dataframe['FlagPagamento'] = FlagPagamentoBool
-
 
     st.dataframe(dataframe, hide_index=True)
     col_but1,col_but2,col_but3= st.columns(3)

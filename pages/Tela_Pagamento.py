@@ -9,8 +9,6 @@ import pandas as pd
 import time
 from streamlit_extras.switch_page_button import switch_page
 
-
-
 # Configurações do banco de dados
 db_config = {
     'host': st.secrets["DATABASE_HOST"],
@@ -49,7 +47,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
     )
-
 
 def des(key):
     if st.session_state.get(key) == None:
@@ -105,7 +102,6 @@ if "nomeimutavel" in st.session_state: ##foda!!
 else:
     nome = st.session_state.name
 
-
 st.title('Tela de Pagamento')
 
 colunas_usadas = ['Pago', 'Valor', 'Qtd', 'Produto', 'Nome']
@@ -119,6 +115,9 @@ if len(df_nao_pago) != 0:
     pagamento = st.selectbox('Deseja pagar tudo?:', ['Pagar linhas selecionadas', 'Pagar tudo'],placeholder="Selecione uma opção", index=None, key='pagamento')
     divida = df_nao_pago['Valor'].sum()
     st.write(f'O total de dívidas é :red[R$: {divida}]')
+    
+    df_nao_pago['Valor'] = df_nao_pago['Valor'].astype(float)
+    
     df_editavel = st.data_editor(
         df_nao_pago[colunas_usadas],
         key='db',
@@ -155,6 +154,8 @@ if len(df_nao_pago) != 0:
             df_editavel['Pago'] = True
             soma_valores_pago = df_editavel.loc[df_editavel['Pago'] == True, 'Valor'].sum()
             st.write(f'Deseja aliviar a dívida de :red[R$:{soma_valores_pago}?]')
+            st.image('img/pix.png', width=600)
+
         except:
             st.error('Filtre outra pessoa')
     if pagamento == 'Pagar linhas selecionadas':
@@ -167,7 +168,11 @@ if len(df_nao_pago) != 0:
                 st.image('img/pix.png', width=600)
         except:
             st.error('Filtre outra pessoa')
-
+            
+    Voltar = st.button('Voltar')
+    if Voltar:
+        switch_page("Tela_Nome")
+        
     if botao:
         if soma_valores_pago == 0:
             st.error('❌ Nenhuma linha foi selecionada.')
