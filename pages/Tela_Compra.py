@@ -59,26 +59,24 @@ def Tela_Compra():
     st.subheader(f"Bem - Vindo, {nome.title()} faça sua compra abaixo.")
     col1,col2 = st.columns([2,1])
     col_but1,col_but2,col_but3= st.columns(3)
-    
-    
-    
+    use_category_filter = st.checkbox("Deseja procurar por categoria?")
+    if use_category_filter:
+        category_input = st.selectbox(
+            "Selecione a categoria",
+            df_precos['Categoria'].unique(),
+            key='category',
+            index=None,
+            placeholder='Selecione a categoria'
+        )
+
     with col1:
         product_input = st.selectbox(
             "Selecione o produto consumido",
-            df_precos['Filtro'],
+            df_precos['Filtro'] if not use_category_filter else df_precos.query("Categoria==@category_input")['Filtro'],
             key='product',
             index=None,
             placeholder='Selecione o produto'
         )
-        use_category_filter = st.checkbox("Deseja procurar por categoria?")
-        if use_category_filter:
-            category_input = st.selectbox(
-                "Selecione a categoria",
-                df_precos['Categoria'],
-                key='category',
-                index=None,
-                placeholder='Selecione a categoria'
-            )
 
     with col2:
         quantity_input = st.number_input(
