@@ -33,6 +33,14 @@ def Tela_Conclusao():
     [data-testid="collapsedControl"] {
         display: none
     }
+    footer {
+        visibility: hidden;
+    }
+    footer:before{
+        content: '🧠 Feito por João, Hugo & Patrick';
+        visibility: visible;
+        display: block;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -54,7 +62,7 @@ def Tela_Conclusao():
 
         
     st.write(f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
-    st.write('Faça o pagamento para o **pix telefone número: 12345678910**')
+    st.write('Faça o pagamento para o pix para o telefone **21 96475-0527**')
     FlagPagamento= st.radio("**Você já pagou?**",
                         ["Sim","Não"],
                         index=1)
