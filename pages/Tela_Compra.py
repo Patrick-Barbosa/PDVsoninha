@@ -60,12 +60,11 @@ def Tela_Compra():
     col1,col2 = st.columns([2,1])
     col_but1,col_but2,col_but3= st.columns(3)
     
-    
-    
     with col1:
+        st.session_state.Categoria = df_precos
         product_input = st.selectbox(
             "Selecione o produto consumido",
-            df_precos['Filtro'],
+            st.session_state.Categoria['Filtro'].unique(),
             key='product',
             index=None,
             placeholder='Selecione o produto'
@@ -74,12 +73,15 @@ def Tela_Compra():
         if use_category_filter:
             category_input = st.selectbox(
                 "Selecione a categoria",
-                df_precos['Categoria'],
+                df_precos['Categoria'].unique(),
                 key='category',
                 index=None,
                 placeholder='Selecione a categoria'
             )
-
+            if category_input != None:
+                st.session_state.Categoria = df_precos[df_precos['Categoria'] == category_input]
+            else:
+                st.session_state.Categoria = df_precos
     with col2:
         quantity_input = st.number_input(
             "Selecione a quantidade comprada",
@@ -88,17 +90,20 @@ def Tela_Compra():
             step=1,
             key='quantity'
         )
+    
     with col_but1:
         butao_comprar_mais = st.button("Salvar Compra", type='primary')
     with col_but2:
         butao_conclusao = st.button("Finalizar a Compra")
     with col_but3:
         butao_cancelar = st.button("Cancelar Compras")
+    
     if butao_conclusao:
         if st.session_state.df_compras.empty:
             st.error("Você não cadastrou nenhuma compra!!!", icon="🚨")
         else:
             switch_page("Tela_Conclusao")
+    
     if butao_comprar_mais:
         if product_input is not None and quantity_input != 0:
             st.session_state.Flag_Clicou_aqui = True
@@ -106,10 +111,15 @@ def Tela_Compra():
             st.success(f"Compra de {st.session_state.quantity} de {df_precos.loc[df_precos['Filtro'] == st.session_state.product, 'Produto'].iloc[0]} com sucesso")
         else:
             st.error("Você não selecionou nenhum produto!!!", icon="🚨")
+    
     Escreve_Compras()
+    
     if butao_cancelar:
         Cancela_Compras()
         st.session_state.df_compras()
+
+if __name__ == "__main__":
+    Tela_Compra()
 
 def Salva_Compra():
     df_precos = Obtem_Preco_Banco()
