@@ -148,7 +148,9 @@ if len(df_nao_pago) != 0:
         }
     )
     st.divider()
-    botao = st.button('Confirmar alterações', disabled=not des('pagamento'), type='primary')
+    col1, col2, col3, col4 = st.columns([1,1,1,1])
+    with col1:
+        botao = st.button('Confirmar alterações', disabled=not des('pagamento'), type='primary')
     if pagamento == 'Pagar tudo':
         try:
             df_editavel['Pago'] = True
@@ -169,7 +171,8 @@ if len(df_nao_pago) != 0:
         except:
             st.error('Filtre outra pessoa')
             
-    Voltar = st.button('Voltar')
+    with col2:
+        Voltar = st.button('Voltar')
     if Voltar:
         switch_page("Tela_Nome")
         
