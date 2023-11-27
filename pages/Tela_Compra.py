@@ -24,6 +24,26 @@ ssl_config = {
 db_config.update(ssl_config)
 st.session_state.travaDuploClick = 0
 
+def Escreve_Compras():
+    st.subheader("Compras Registradas:")
+    if not st.session_state.df_compras.empty:
+        st.write(st.session_state.df_compras)
+        Valor_Gasto = np.sum(st.session_state.df_compras['Preco'])
+        st.subheader(f"Gasto Total **{Valor_Gasto:.2f}**")
+    else:
+        st.text("Nenhuma compra registrada.")         
+
+
+def Verifica_Compras_No_Session_State():
+    if 'df_compras' not in st.session_state:
+        st.session_state.df_compras = pd.DataFrame(columns=["Nome", "Produto", "Quantidade","Preco"])
+        return st.session_state.df_compras
+
+
+def Cancela_Compras():
+    st.session_state.df_compras = pd.DataFrame(columns=["Nome", "Produto", "Quantidade","Preco"])
+    switch_page("Tela_Nome")
+
 def Obtem_Preco_Banco():
     conn = pymysql.connect(**db_config)
     query = "SELECT * FROM dProdutos"
@@ -138,26 +158,6 @@ def Salva_Compra():
      ##                                                               "Quantidade":quantidade,
        #                                                              "Preco":preco},ignore_index=True)
     
-def Escreve_Compras():
-    st.subheader("Compras Registradas:")
-    if not st.session_state.df_compras.empty:
-        st.write(st.session_state.df_compras)
-        Valor_Gasto = np.sum(st.session_state.df_compras['Preco'])
-        st.subheader(f"Gasto Total **{Valor_Gasto:.2f}**")
-    else:
-        st.text("Nenhuma compra registrada.")         
-
-
-def Verifica_Compras_No_Session_State():
-    if 'df_compras' not in st.session_state:
-        st.session_state.df_compras = pd.DataFrame(columns=["Nome", "Produto", "Quantidade","Preco"])
-        return st.session_state.df_compras
-
-
-def Cancela_Compras():
-    st.session_state.df_compras = pd.DataFrame(columns=["Nome", "Produto", "Quantidade","Preco"])
-    switch_page("Tela_Nome")
-
 
 if __name__ == "__main__":
     Tela_Compra()
