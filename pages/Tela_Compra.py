@@ -30,6 +30,7 @@ def Obtem_Preco_Banco():
     df_precos = pd.read_sql(query, conn)
     conn.close()
     df_precos = df_precos.sort_values('Data', ascending=False).drop_duplicates('Produto')
+    df_precos['Filtro'] = df_precos['Produto'] + ' - R$: ' + df_precos['Valor'].astype(str)
     return df_precos
 
 def Tela_Compra():
@@ -58,10 +59,11 @@ def Tela_Compra():
     st.subheader(f"Bem - Vindo, {nome.title()} faça sua compra abaixo.")
     col1,col2 = st.columns([2,1])
     col_but1,col_but2,col_but3= st.columns(3)
+    
     with col1:
         product_input = st.selectbox(
     "Selecione o produto consumido",
-    df_precos['Produto'],
+    df_precos['Filtro'],
     key='product',
     index = None,
     placeholder='Selecione o produto'
@@ -90,7 +92,7 @@ def Tela_Compra():
         if product_input != None and quantity_input != 0:
             st.session_state.Flag_Clicou_aqui = True
             Salva_Compra()
-            st.success(f"Compra de {st.session_state.quantity} de {st.session_state.product} com sucesso")
+            st.success(f"Compra de {st.session_state.quantity} de {df_precos.loc[df_precos['Filtro'] == st.session_state.product, 'Produto'].iloc[0]} com sucesso")
         else:
             st.error("Você não selecionou nenhum produto!!!", icon="🚨")
     Escreve_Compras()
@@ -101,7 +103,7 @@ def Tela_Compra():
 def Salva_Compra():
     df_precos = Obtem_Preco_Banco()
     nome = st.session_state.name
-    produto = st.session_state.product
+    produto = df_precos.loc[df_precos['Filtro'] == st.session_state.product, 'Produto'].iloc[0]
     quantidade = st.session_state.quantity
     preco = df_precos.query("Produto==@produto")['Valor'].iloc[0] * quantidade
     
