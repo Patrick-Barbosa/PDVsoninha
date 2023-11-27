@@ -60,36 +60,47 @@ def Tela_Compra():
     col1,col2 = st.columns([2,1])
     col_but1,col_but2,col_but3= st.columns(3)
     
+    
+    
     with col1:
         product_input = st.selectbox(
-    "Selecione o produto consumido",
-    df_precos['Filtro'],
-    key='product',
-    index = None,
-    placeholder='Selecione o produto'
-    )
-        
+            "Selecione o produto consumido",
+            df_precos['Filtro'],
+            key='product',
+            index=None,
+            placeholder='Selecione o produto'
+        )
+        use_category_filter = st.checkbox("Deseja procurar por categoria?")
+        if use_category_filter:
+            category_input = st.selectbox(
+                "Selecione a categoria",
+                df_precos['Categoria'],
+                key='category',
+                index=None,
+                placeholder='Selecione a categoria'
+            )
+
     with col2:
         quantity_input = st.number_input(
-    "Selecione a quantidade comprada",
-    min_value=1,
-    max_value=10,
-    step=1,
-    key='quantity'
-    ) 
+            "Selecione a quantidade comprada",
+            min_value=1,
+            max_value=10,
+            step=1,
+            key='quantity'
+        )
     with col_but1:
-        butao_comprar_mais = st.button("Salvar Compra",type='primary')
+        butao_comprar_mais = st.button("Salvar Compra", type='primary')
     with col_but2:
         butao_conclusao = st.button("Finalizar a Compra")
     with col_but3:
         butao_cancelar = st.button("Cancelar Compras")
     if butao_conclusao:
         if st.session_state.df_compras.empty:
-            st.error("Você não cadastrou nenhuma compra!!!",icon="🚨")     
+            st.error("Você não cadastrou nenhuma compra!!!", icon="🚨")
         else:
             switch_page("Tela_Conclusao")
     if butao_comprar_mais:
-        if product_input != None and quantity_input != 0:
+        if product_input is not None and quantity_input != 0:
             st.session_state.Flag_Clicou_aqui = True
             Salva_Compra()
             st.success(f"Compra de {st.session_state.quantity} de {df_precos.loc[df_precos['Filtro'] == st.session_state.product, 'Produto'].iloc[0]} com sucesso")
