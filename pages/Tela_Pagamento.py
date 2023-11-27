@@ -124,9 +124,10 @@ if len(df_nao_pago) != 0:
         key='db',
         hide_index=True,
         column_config={
-            "Valor": st.column_config.TextColumn(
+            "Valor": st.column_config.NumberColumn(
                 "Valor",
                 help="Valor devido",
+                format="%.2f",
                 disabled=True,
             ),
             "Qtd": st.column_config.TextColumn(
@@ -162,6 +163,7 @@ if len(df_nao_pago) != 0:
                 st.write(':red[Selecione uma linha para dar baixa.]')
             else:
                 st.write(f'Deseja pagar a dívida de :red[R$:{soma_valores_pago}?], faça o pix para o telefone **21 96475-0527**')
+                st.image('img/pix.png', width=200)
         except:
             st.error('Filtre outra pessoa')
 

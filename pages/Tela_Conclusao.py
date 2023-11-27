@@ -63,6 +63,8 @@ def Tela_Conclusao():
         
     st.write(f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
     st.write('Faça o pagamento para o pix para o telefone **21 96475-0527**')
+    st.image('img/pix.png', width=200)
+
     FlagPagamento= st.radio("**Você já pagou?**",
                         ["Sim","Não"],
                         index=1)
