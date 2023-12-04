@@ -109,7 +109,7 @@ def Tela_Compra():
         if product_input is not None and quantity_input != 0:
             st.session_state.Flag_Clicou_aqui = True
             Salva_Compra()
-            st.success(f"Compra de {st.session_state.quantity} de {df_precos.loc[df_precos['Filtro'] == st.session_state.product, 'Produto'].iloc[0]} com sucesso")
+            st.success(f"{st.session_state.quantity} {df_precos.loc[df_precos['Filtro'] == st.session_state.product, 'Produto'].iloc[0]} adicionado ao carrinho!")
         else:
             st.error("Você não selecionou nenhum produto!!!", icon="🚨")
     Escreve_Compras()
