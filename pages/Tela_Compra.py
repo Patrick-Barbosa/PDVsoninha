@@ -95,7 +95,7 @@ def Tela_Compra():
             key='quantity'
         )
     with col_but1:
-        butao_comprar_mais = st.button("Salvar Compra", type='primary')
+        butao_comprar_mais = st.button("Adicionar ao carrinho", type='primary')
     with col_but2:
         butao_conclusao = st.button("Finalizar a Compra")
     with col_but3:
