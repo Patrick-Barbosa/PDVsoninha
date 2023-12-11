@@ -67,7 +67,9 @@ def tela_inicial():
     
     col1, col2, col3, col4 = st.columns(4)
     nome = st.session_state.name
-    if nome == None:
+    if butao_compra and nome == None:
+        st.error("Você não digitou um nome")
+    if botao_pagemento and nome == None:
         st.error("Você não digitou um nome")
     with col1:
         butao_compra = st.button("Fazer Compra", type="primary")
