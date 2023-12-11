@@ -65,7 +65,7 @@ def Tela_Conclusao():
     FlagPagamento= st.radio("**Você já pagou?**",
                         #["Sim","Não"],
                         ["Não"],
-                        index=1)
+                        index=0)
     #st.image('img/pix.png', width=600)
 
     if FlagPagamento == 'Sim':
