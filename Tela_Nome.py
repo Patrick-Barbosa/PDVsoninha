@@ -67,10 +67,6 @@ def tela_inicial():
     
     col1, col2, col3, col4 = st.columns(4)
     nome = st.session_state.name
-    if butao_compra and nome == None:
-        st.error("Você não digitou um nome")
-    if botao_pagemento and nome == None:
-        st.error("Você não digitou um nome")
     with col1:
         butao_compra = st.button("Fazer Compra", type="primary")
         if butao_compra and nome != None:
@@ -79,6 +75,10 @@ def tela_inicial():
         botao_pagemento = st.button("Pagar Dívidas", type="secondary", disabled=True)
         if botao_pagemento and nome != None:
             switch_page("Tela_Pagamento")
+    if butao_compra and nome == None:
+        st.error("Você não digitou um nome")
+    if botao_pagemento and nome == None:
+        st.error("Você não digitou um nome")
     st.divider()
     st.markdown("[💡 Deseja participar dos testes do PDV? Preencha o formulário aqui](https://forms.office.com/r/xzXAmVbpEM)")
 if __name__ == "__main__":
