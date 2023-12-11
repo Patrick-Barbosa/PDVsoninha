@@ -72,7 +72,7 @@ def tela_inicial():
         if butao_compra and nome != None:
             switch_page("Tela_Compra")
     with col2:
-        botao_pagemento = st.button("Pagar Dívidas", type="secondary")
+        botao_pagemento = st.button("Pagar Dívidas", type="secondary", disabled=True)
         if botao_pagemento and nome != None:
             switch_page("Tela_Pagamento")
     st.divider()
