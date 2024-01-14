@@ -104,7 +104,7 @@ else:
 
 st.title('Tela de Pagamento')
 
-colunas_usadas = ['Pago', 'Valor', 'Qtd', 'Produto', 'Nome']
+colunas_usadas = ['Pago', 'Valor', 'Qtd', 'Produto', 'Nome','Data']
 df = base(nome)
 
 df_nao_pago = df_nao_pago = df[df['Pago'] == 0]
@@ -145,6 +145,12 @@ if len(df_nao_pago) != 0:
                 help="Nome do pagador",
                 disabled=True,
             ),
+            "Data":st.column_config.DateColumn(
+                "Data de Compra",
+                help="Data de Compra",
+                format="DD/MM/YYYY",
+                disabled=True,
+            )
         }
     )
     st.divider()
