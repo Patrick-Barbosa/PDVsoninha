@@ -15,16 +15,6 @@ db_config = {
     'database': st.secrets["DATABASE"],
     'autocommit': True,
 }
-
-ssl_config = {
-    'ssl': {
-        'ca': 'cert.pem',
-        'ssl_version': ssl.PROTOCOL_TLSv1_2,  
-    }
-}
-
-# Combinar as configurações
-db_config.update(ssl_config)
     
 def Tela_Conclusao():
     st.markdown(

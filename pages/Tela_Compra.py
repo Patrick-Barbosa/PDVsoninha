@@ -15,13 +15,6 @@ db_config = {
     'autocommit': True,
 }
 
-ssl_config = {
-    'ssl': {
-        'ca': 'cert.pem',
-        'ssl_version': ssl.PROTOCOL_TLSv1_2,  
-    }
-}
-db_config.update(ssl_config)
 st.session_state.travaDuploClick = 0
 
 def Obtem_Preco_Banco():

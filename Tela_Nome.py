@@ -14,14 +14,6 @@ db_config = {
     'autocommit': True,
 }
 
-ssl_config = {
-    'ssl': {
-        'ca': 'cert.pem',
-        'ssl_version': ssl.PROTOCOL_TLSv1_2,  
-    }
-}
-db_config.update(ssl_config)
-
 def Nomes():
     conn = pymysql.connect(**db_config)
     query = "SELECT Nome FROM dClientes"
@@ -80,6 +72,5 @@ def tela_inicial():
         elif botao_pagemento and nome == None:
             st.error("Você não digitou um nome", icon="🚨")
     st.divider()
-    st.markdown("[💡 Deseja participar dos testes do PDV? Preencha o formulário aqui](https://forms.office.com/r/xzXAmVbpEM)")
 if __name__ == "__main__":
     tela_inicial()
