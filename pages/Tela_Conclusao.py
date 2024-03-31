@@ -45,7 +45,7 @@ def Tela_Conclusao():
         st.markdown("""
     <style>
     .titulo {
-        font-size: 24px; /* Ajuste o tamanho da fonte conforme necessário */
+        font-size: 36px; /* Ajuste o tamanho da fonte conforme necessário */
         font-weight: bold;
     }
     </style>
@@ -64,8 +64,6 @@ def Tela_Conclusao():
 
     col_but1, col_but2, col_but3 = st.columns(3)
 
-    st.image('img/pix.png', width=600)
-
     st.dataframe(
         dataframe[['Produto', 'Quantidade', 'Preco']], hide_index=True)
 
@@ -79,6 +77,7 @@ def Tela_Conclusao():
         butao_volta_tela = st.button("Voltar para a Tela Anterior")
         st.write(
             f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
+        st.image('img/pix.png', width=600)
 
     with col_but3:
         butao_cancela_compra = st.button("Cancelar a Compra")
