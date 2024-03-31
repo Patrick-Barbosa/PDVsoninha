@@ -40,8 +40,10 @@ def Tela_Conclusao():
         unsafe_allow_html=True,
     )
 
-    st.title("Tela de Finalização de Compra")
-    col1 = st.columns([1, 1])
+    
+    col1,col2,col3 = st.columns(3)
+    with col2:
+        st.title("Tela de Finalização de Compra")
 
     dataframe = st.session_state.df_compras
     valor_total = np.sum(dataframe['Preco'])
@@ -67,7 +69,8 @@ def Tela_Conclusao():
         FlagPagamentoBool = False
     dataframe['FlagPagamento'] = FlagPagamentoBool
 
-    st.dataframe(dataframe, hide_index=True)
+    st.dataframe(
+        dataframe[['Produto', 'Quantidade', 'Preco']], hide_index=True)
 
     with col_but1:
         butao_finaliza_compra = st.button("Finalizar a Compra", type='primary')
