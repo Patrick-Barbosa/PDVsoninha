@@ -66,12 +66,6 @@ def Tela_Conclusao():
 
     st.image('img/pix.png', width=600)
 
-    if FlagPagamento == 'Sim':
-        FlagPagamentoBool = True
-    elif FlagPagamento == 'Não':
-        FlagPagamentoBool = False
-    dataframe['FlagPagamento'] = FlagPagamentoBool
-
     st.dataframe(
         dataframe[['Produto', 'Quantidade', 'Preco']], hide_index=True)
 
@@ -89,6 +83,11 @@ def Tela_Conclusao():
     with col_but3:
         butao_cancela_compra = st.button("Cancelar a Compra")
         st.write('Faça o pagamento para o pix para o telefone **21 96475-0527**')
+    if FlagPagamento == 'Sim':
+        FlagPagamentoBool = True
+    elif FlagPagamento == 'Não':
+        FlagPagamentoBool = False
+    dataframe['FlagPagamento'] = FlagPagamentoBool
 
     if butao_finaliza_compra:
         Finaliza_Compra(dataframe, FlagPagamento)
