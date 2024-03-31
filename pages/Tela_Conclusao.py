@@ -17,6 +17,10 @@ db_config = {
 
 
 def Tela_Conclusao():
+    
+    # Define a configuração de página para usar o layout wide por padrão
+    st.set_page_config(layout="wide")
+    
     st.markdown(
         """
     <style>
