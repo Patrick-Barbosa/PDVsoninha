@@ -73,13 +73,13 @@ def Tela_Conclusao():
                                  ["Sim", "Não"],
                                  index=1)
 
-    with col_but2:
+    with col_but3:
         butao_volta_tela = st.button("Voltar para a Tela Anterior")
         st.write(
             f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
         st.image('img/pix.png', width=300)
 
-    with col_but3:
+    with col_but5:
         butao_cancela_compra = st.button("Cancelar a Compra")
         st.write('Faça o pagamento para o pix para o telefone **21 96475-0527**')
     if FlagPagamento == 'Sim':
