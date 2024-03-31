@@ -17,10 +17,10 @@ db_config = {
 
 
 def Tela_Conclusao():
-    
+
     # Define a configuração de página para usar o layout wide por padrão
-    st.set_page_config(layout="wide")
-    
+    st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
+
     st.markdown(
         """
     <style>
@@ -42,7 +42,6 @@ def Tela_Conclusao():
 
     st.title("Tela de Finalização de Compra")
     col1 = st.columns([1, 1])
-    
 
     dataframe = st.session_state.df_compras
     valor_total = np.sum(dataframe['Preco'])
