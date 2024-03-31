@@ -1,6 +1,5 @@
 ## import bd
 import pymysql
-import ssl
 
 ## import normal :D
 import streamlit as st

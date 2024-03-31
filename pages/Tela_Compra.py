@@ -1,6 +1,5 @@
 # import banco
 import pymysql
-import ssl
 # --------------
 import numpy as np
 import pandas as pd

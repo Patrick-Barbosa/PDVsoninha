@@ -1,6 +1,5 @@
 # import banco
 import pymysql
-import ssl
 # --------------
 import pandas as pd
 import streamlit as st
