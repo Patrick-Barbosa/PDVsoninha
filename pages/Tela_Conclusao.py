@@ -38,7 +38,7 @@ def Tela_Conclusao():
 
     st.title("Tela de Finalização de Compra")
     col1 = st.columns([1, 1])
-    col_but1, col_but2, col_but3 = st.columns(3)
+    
 
     dataframe = st.session_state.df_compras
     valor_total = np.sum(dataframe['Preco'])
@@ -50,6 +50,8 @@ def Tela_Conclusao():
 
     st.write(f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
     st.write('Faça o pagamento para o pix para o telefone **21 96475-0527**')
+
+    col_but1, col_but2, col_but3 = st.columns(3)
 
     FlagPagamento = st.radio("**Você já pagou?**",
                              ["Sim", "Não"],
