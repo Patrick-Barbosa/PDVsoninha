@@ -40,8 +40,7 @@ def Tela_Conclusao():
         unsafe_allow_html=True,
     )
 
-    
-    col1,col2,col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
     with col2:
         st.title("Tela de Finalização de Compra")
 
@@ -53,14 +52,8 @@ def Tela_Conclusao():
     else:
         dataframe['FlagPagamento'] = False
 
-    st.write(f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
-    st.write('Faça o pagamento para o pix para o telefone **21 96475-0527**')
-
     col_but1, col_but2, col_but3 = st.columns(3)
 
-    FlagPagamento = st.radio("**Você já pagou?**",
-                             ["Sim", "Não"],
-                             index=1)
     st.image('img/pix.png', width=600)
 
     if FlagPagamento == 'Sim':
@@ -74,12 +67,18 @@ def Tela_Conclusao():
 
     with col_but1:
         butao_finaliza_compra = st.button("Finalizar a Compra", type='primary')
+        FlagPagamento = st.radio("**Você já pagou?**",
+                                 ["Sim", "Não"],
+                                 index=1)
 
     with col_but2:
         butao_volta_tela = st.button("Voltar para a Tela Anterior")
+        st.write(
+            f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
 
     with col_but3:
         butao_cancela_compra = st.button("Cancelar a Compra")
+        st.write('Faça o pagamento para o pix para o telefone **21 96475-0527**')
 
     if butao_finaliza_compra:
         Finaliza_Compra(dataframe, FlagPagamento)
