@@ -42,7 +42,17 @@ def Tela_Conclusao():
 
     col1, col2, col3 = st.columns(3)
     with col2:
-        st.title("Tela de Finalização de Compra")
+        st.markdown("""
+    <style>
+    .titulo {
+        font-size: 24px; /* Ajuste o tamanho da fonte conforme necessário */
+        font-weight: bold;
+    }
+    </style>
+    <div class="titulo">
+        Tela de Finalização de Compra 😎
+    </div>
+    """, unsafe_allow_html=True)
 
     dataframe = st.session_state.df_compras
     valor_total = np.sum(dataframe['Preco'])
