@@ -62,7 +62,7 @@ def Tela_Conclusao():
     else:
         dataframe['FlagPagamento'] = False
 
-    col_but1, col_but2, col_but3 = st.columns(3)
+    col_but1, col_but2, col_but3, col_but4, col_but5 = st.columns(5)
 
     st.dataframe(
         dataframe[['Produto', 'Quantidade', 'Preco']], hide_index=True)
@@ -77,7 +77,7 @@ def Tela_Conclusao():
         butao_volta_tela = st.button("Voltar para a Tela Anterior")
         st.write(
             f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
-        st.image('img/pix.png', width=600)
+        st.image('img/pix.png', width=300)
 
     with col_but3:
         butao_cancela_compra = st.button("Cancelar a Compra")
