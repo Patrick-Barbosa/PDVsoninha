@@ -102,10 +102,12 @@ def Tela_Compra():
         else:
             st.error("Você não selecionou nenhum produto!!!", icon="🚨")
     Escreve_Compras()
+    col_but2, col_but3 = st.columns(2)
     if product_input is None and quantity_input == 0:
-        pass
+        col_but2 = st.write(" ")
+        col_but3 = st.write(" ")
     else:
-        col_but2, col_but3 = st.columns(2)
+        
         with col_but2:
             butao_conclusao = st.button("Finalizar a Compra")
         with col_but3:
