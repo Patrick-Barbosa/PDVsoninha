@@ -103,9 +103,7 @@ def Tela_Compra():
             st.error("Você não selecionou nenhum produto!!!", icon="🚨")
     Escreve_Compras()
     col_but2, col_but3 = st.columns(2)
-    st.write(product_input)
-    st.write(quantity_input)
-    if product_input is None and quantity_input == 0:
+    if product_input is None:
         col_but2 = st.write(" ")
         col_but3 = st.write(" ")
     else:
