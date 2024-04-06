@@ -61,7 +61,6 @@ def Tela_Compra():
 
     st.title("Cardápio")
     col1, col2 = st.columns([2, 1])
-    col_but1, col_but2, col_but3 = st.columns(3)
     use_category_filter = st.checkbox("Deseja procurar por categoria?")
 
     if use_category_filter:
@@ -91,8 +90,8 @@ def Tela_Compra():
             step=1,
             key='quantity'
         )
-    with col_but1:
-        butao_comprar_mais = st.button("Adicionar ao carrinho", type='primary')
+    
+    butao_comprar_mais = st.button("Adicionar ao carrinho", type='primary')
 
     if butao_comprar_mais:
         if product_input is not None and quantity_input != 0:
@@ -106,6 +105,7 @@ def Tela_Compra():
     if product_input is None and quantity_input == 0:
         pass
     else:
+        col_but2, col_but3 = st.columns(2)
         with col_but2:
             butao_conclusao = st.button("Finalizar a Compra")
         with col_but3:
