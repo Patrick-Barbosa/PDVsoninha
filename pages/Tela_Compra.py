@@ -90,7 +90,7 @@ def Tela_Compra():
             step=1,
             key='quantity'
         )
-    
+
     butao_comprar_mais = st.button("Adicionar ao carrinho", type='primary')
 
     if butao_comprar_mais:
