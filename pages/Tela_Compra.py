@@ -63,6 +63,7 @@ def Tela_Compra():
     col1, col2 = st.columns([2, 1])
     col_but1, col_but2, col_but3 = st.columns(3)
     use_category_filter = st.checkbox("Deseja procurar por categoria?")
+
     if use_category_filter:
         category_input = st.selectbox(
             "Selecione a categoria",
@@ -102,7 +103,7 @@ def Tela_Compra():
         else:
             st.error("Você não selecionou nenhum produto!!!", icon="🚨")
     Escreve_Compras()
-    if product_input is not None and quantity_input != 0:
+    if product_input is None and quantity_input == 0:
         pass
     else:
         with col_but2:
