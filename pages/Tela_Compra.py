@@ -92,11 +92,7 @@ def Tela_Compra():
         )
     with col_but1:
         butao_comprar_mais = st.button("Adicionar ao carrinho", type='primary')
-    if butao_conclusao:
-        if st.session_state.df_compras.empty:
-            st.error("Você não cadastrou nenhuma compra!!!", icon="🚨")
-        else:
-            switch_page("Tela_Conclusao")
+
     if butao_comprar_mais:
         if product_input is not None and quantity_input != 0:
             st.session_state.Flag_Clicou_aqui = True
@@ -110,6 +106,8 @@ def Tela_Compra():
         butao_conclusao = st.button("Finalizar a Compra")
     with col_but3:
         butao_cancelar = st.button("Cancelar Compras")
+    if butao_conclusao:
+        switch_page("Tela_Conclusao")
     if butao_cancelar:
         Cancela_Compras()
         st.session_state.df_compras()
