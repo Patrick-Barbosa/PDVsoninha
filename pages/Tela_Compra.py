@@ -111,11 +111,10 @@ def Tela_Compra():
             butao_conclusao = st.button("Finalizar a Compra")
         with col_but3:
             butao_cancelar = st.button("Cancelar Compras")
-    if butao_conclusao:
-        switch_page("Tela_Conclusao")
-    if butao_cancelar:
-        Cancela_Compras()
-        st.session_state.df_compras()
+        if butao_conclusao:
+            switch_page("Tela_Conclusao")
+        if butao_cancelar:
+            Cancela_Compras()
 
 
 def Salva_Compra():
