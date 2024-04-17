@@ -57,7 +57,7 @@ def Tela_Conclusao():
                              ["Sim", "Não"],
                              index=1)
 
-    col_but1, col_but2 = st.columns(2)
+    col_but1, col_but2 = st.columns([1,1])
 
     with col_but1:
         st.write(" ")
