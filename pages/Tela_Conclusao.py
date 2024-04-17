@@ -75,9 +75,6 @@ def Tela_Conclusao():
     if butao_finaliza_compra:
         Finaliza_Compra(dataframe, FlagPagamento)
 
-    if butao_volta_tela:
-        Volta_Tela_Anterior()
-
     if butao_cancela_compra:
         Cancela_Compras()
 
