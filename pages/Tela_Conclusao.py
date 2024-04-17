@@ -42,21 +42,17 @@ def Tela_Conclusao():
 
     dataframe = st.session_state.df_compras
     st.title("Pagamento")
-    
+
     if 'FlagPagamento' in dataframe.columns:
         pass
     else:
         dataframe['FlagPagamento'] = False
     st.dataframe(dataframe, hide_index=True)
     valor_total = np.sum(dataframe['Preco'])
-    
+
     st.write(f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
 
     col1, col2, col3 = st.columns(3)
-
-    
-
-
 
     col_but1, col_but2, col_but3, col_but4, col_but5 = st.columns(5)
 
@@ -70,10 +66,8 @@ def Tela_Conclusao():
     with col_but3:
         st.write(" ")
         butao_volta_tela = st.button("Voltar para a Tela Anterior")
-        st.write(
-            f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
-        st.write('Faça o pagamento para o pix para o telefone **21 96475-0527**')
-        st.image('img/pix.png', width=300)
+        st.write('Scaneie o QR CODE e faça o pagamento para **21 96475-0527**')
+        st.image('img/pix.png', width=600)
 
     with col_but5:
         st.write(" ")
