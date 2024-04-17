@@ -40,22 +40,13 @@ def Tela_Conclusao():
         unsafe_allow_html=True,
     )
 
-    col1, col2, col3 = st.columns(3)
-    with col2:
-        st.markdown("""
-    <style>
-    .titulo {
-        font-size: 36px; /* Ajuste o tamanho da fonte conforme necessário */
-        font-weight: bold;
-    }
-    </style>
-    <div class="titulo">
-        Tela de Finalização de Compra 😎
-    </div>
-    """, unsafe_allow_html=True)
-        st.empty()
-
     dataframe = st.session_state.df_compras
+    st.title("Pagamento")
+    st.dataframe(
+            dataframe[['Produto', 'Quantidade', 'Preco']], hide_index=True)
+
+    col1, col2, col3 = st.columns(3)
+
     valor_total = np.sum(dataframe['Preco'])
 
     if 'FlagPagamento' in dataframe.columns:
@@ -71,8 +62,7 @@ def Tela_Conclusao():
         FlagPagamento = st.radio("**Você já pagou?**",
                                  ["Sim", "Não"],
                                  index=1)
-        st.dataframe(
-            dataframe[['Produto', 'Quantidade', 'Preco']], hide_index=True)
+
 
     with col_but3:
         st.write(" ")
