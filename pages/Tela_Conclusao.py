@@ -51,27 +51,21 @@ def Tela_Conclusao():
     valor_total = np.sum(dataframe['Preco'])
 
     st.write(f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
+    st.write('Scaneie o QR CODE e faça o pagamento para **21 96475-0527**')
+    st.image('img/pix.png', width=600)
+    FlagPagamento = st.radio("**Você já pagou?**",
+                             ["Sim", "Não"],
+                             index=1)
 
-    col1, col2, col3 = st.columns(3)
-
-    col_but1, col_but2, col_but3, col_but4, col_but5 = st.columns(5)
+    col_but1, col_but2 = st.columns(2)
 
     with col_but1:
         st.write(" ")
         butao_finaliza_compra = st.button("Finalizar a Compra", type='primary')
-        FlagPagamento = st.radio("**Você já pagou?**",
-                                 ["Sim", "Não"],
-                                 index=1)
 
-    with col_but3:
-        st.write(" ")
-        butao_volta_tela = st.button("Voltar para a Tela Anterior")
-        st.write('Scaneie o QR CODE e faça o pagamento para **21 96475-0527**')
-        st.image('img/pix.png', width=600)
-
-    with col_but5:
-        st.write(" ")
+    with col_but2:
         butao_cancela_compra = st.button("Cancelar a Compra")
+
     if FlagPagamento == 'Sim':
         FlagPagamentoBool = True
     elif FlagPagamento == 'Não':
