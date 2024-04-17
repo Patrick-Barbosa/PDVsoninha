@@ -42,10 +42,9 @@ def Tela_Conclusao():
 
     dataframe = st.session_state.df_compras
     st.title("Pagamento")
-    st.dataframe(
-        dataframe[['Produto', 'Quantidade', 'Preco', 'FlagPagamento']], hide_index=True)
-    st.write(
-        f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
+    st.dataframe(dataframe[['Produto', 'Quantidade', 'Preco', 'FlagPagamento']], hide_index=True)
+    
+    st.write(f"O Valor total da sua compra foi de **R$ {valor_total:.2f}**")
 
     col1, col2, col3 = st.columns(3)
 
