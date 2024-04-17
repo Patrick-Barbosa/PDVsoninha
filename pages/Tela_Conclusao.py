@@ -58,13 +58,14 @@ def Tela_Conclusao():
                              ["Sim", "Não"],
                              index=1)
 
-    col_but1, col_but2 = st.columns([0.5, 0.5])
+    col1, space, col2 = st.columns([1, 0.1, 1])
 
-    with col_but1:
+
+    with col1:
         st.write(" ")
         butao_finaliza_compra = st.button("Finalizar a Compra", type='primary')
 
-    with col_but2:
+    with col2:
         butao_cancela_compra = st.button("Cancelar a Compra")
 
     if FlagPagamento == 'Sim':
