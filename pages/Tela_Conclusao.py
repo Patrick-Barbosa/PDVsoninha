@@ -108,7 +108,7 @@ def Volta_Tela_Anterior():
 
 def Cancela_Compras():
     st.session_state.df_compras = pd.DataFrame(
-        columns=["Nome", "Produto", "Quantidade", "Preço"])
+        columns=["Nome", "Produto", "Quantidade", "Preco"])
     switch_page("Tela_Nome")
 
 

@@ -102,16 +102,18 @@ def Tela_Compra():
         else:
             st.error("Você não selecionou nenhum produto!!!", icon="🚨")
     Escreve_Compras()
-    col_but2, col_but3 = st.columns(2)
+    col_but2, col_but3,col_but4 = st.columns(3)
     if product_input is None:
         col_but2 = st.write(" ")
         col_but3 = st.write(" ")
     else:
         with col_but2:
-            butao_conclusao = st.button("Finalizar a Compra")
+            butao_conclusao_fiado = st.button("Finalizar a Compra no Fiado")
         with col_but3:
+            butao_conclusao_pagamento= st.button("Ir para a Tela de Pagamento")
+        with col_but4:
             butao_cancelar = st.button("Cancelar Compras")
-        if butao_conclusao:
+        if butao_conclusao_pagamento:
             switch_page("Tela_Conclusao")
         if butao_cancelar:
             Cancela_Compras()
