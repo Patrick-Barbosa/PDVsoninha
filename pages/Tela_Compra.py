@@ -181,11 +181,12 @@ def Finaliza_Compra(df, FlagPagamento):
     time.sleep(1)
     time.sleep(1)
 
-    st.success("Venda Enviada com Sucesso")
+    
 
     st.balloons()
+    st.success("Venda Enviada com Sucesso")
     time.sleep(2)
-
+    
 def Envia_Dados_BD(df, FlagPagamento):
     datahora = datetime.now()
     data = datetime.now().date()
