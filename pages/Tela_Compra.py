@@ -121,6 +121,8 @@ def Tela_Compra():
             Cancela_Compras()
         if butao_conclusao_fiado:
             Finaliza_Compra(st.session_state.df_compras, False)
+            time.sleep(3)
+            switch_page("Tela_Nome")
 
 
 
