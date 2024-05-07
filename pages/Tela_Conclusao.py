@@ -50,7 +50,6 @@ def Tela_Conclusao():
     
     
     st.dataframe(dataframe, hide_index=True)
-    print(dataframe)
     valor_total = np.sum(dataframe['Preco'])
 
     st.markdown(
