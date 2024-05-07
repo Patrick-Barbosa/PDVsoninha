@@ -13,7 +13,6 @@ db_config = {
     'autocommit': True,
 }
 
-
 def Nomes():
     conn = pymysql.connect(**db_config)
     query = "SELECT Nome FROM dClientes"
