@@ -121,7 +121,6 @@ def Tela_Compra():
             Cancela_Compras()
         if butao_conclusao_fiado:
             Finaliza_Compra(st.session_state.df_compras, False)
-            st.write(st.session_state.Cancelando)
             st.session_state.clear()
             switch_page("Tela_Nome")
 
@@ -129,7 +128,6 @@ def Tela_Compra():
 
 def Salva_Compra():
     st.session_state.Cancelando = False
-    st.write(st.session_state.Cancelando)
     df_precos = Obtem_Preco_Banco()
     nome = st.session_state.name
     produto = df_precos.loc[df_precos['Filtro'] ==
