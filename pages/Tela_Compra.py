@@ -121,6 +121,7 @@ def Tela_Compra():
             Cancela_Compras()
         if butao_conclusao_fiado:
             Finaliza_Compra(st.session_state.df_compras, False)
+            st.write(st.session_state.Cancelando)
             st.session_state.clear()
             switch_page("Tela_Nome")
 
@@ -181,8 +182,8 @@ def Finaliza_Compra(df, FlagPagamento):
             target=Envia_Dados_BD, args=(df, FlagPagamento))
         thread_envio.start()
 
-    time.sleep(1)
-    time.sleep(1)
+    time.sleep(0.5)
+    time.sleep(0.5)
 
     
 
