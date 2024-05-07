@@ -105,7 +105,7 @@ def Tela_Compra():
             st.error("Você não selecionou nenhum produto!!!", icon="🚨")
     Escreve_Compras()
     col_but2, col_but3,col_but4 = st.columns(3)
-    if product_input is None:
+    if product_input is None or st.session_state.Cancelando is True:
         col_but2 = st.write(" ")
         col_but3 = st.write(" ")
     else:
@@ -169,6 +169,7 @@ def Cancela_Compras():
         columns=["Nome", "Produto", "Quantidade", "Preco"])
     switch_page("Tela_Nome")
 def Finaliza_Compra(df, FlagPagamento):
+    st.session_state.Cancelando = True
     if 'travaDuploClick' not in st.session_state:
         st.session_state.travaDuploClick = 0
     st.session_state.travaDuploClick += 1
@@ -184,7 +185,7 @@ def Finaliza_Compra(df, FlagPagamento):
     
 
     st.balloons()
-    st.success("Venda Enviada com Sucesso")
+    
     time.sleep(2)
     
 def Envia_Dados_BD(df, FlagPagamento):
