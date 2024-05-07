@@ -141,7 +141,7 @@ def Salva_Compra():
 def Escreve_Compras():
     st.subheader("Compras Registradas:")
     if not st.session_state.df_compras.empty:
-        st.write(st.session_state.df_compras)
+        st.dataframe(st.session_state.df_compras,hide_index=True)
         Valor_Gasto = np.sum(st.session_state.df_compras['Preco'])
         st.subheader(f"Gasto Total **{Valor_Gasto:.2f}**")
     else:
