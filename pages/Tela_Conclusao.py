@@ -58,10 +58,9 @@ def Tela_Conclusao():
                              ["Sim", "Não"],
                              index=1)
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4,col5,col6 = st.columns(6)
 
     with col1:
-        st.write(" ")
         butao_finaliza_compra = st.button("Finalizar a Compra", type='primary')
 
     with col2:
@@ -107,7 +106,7 @@ def Volta_Tela_Anterior():
 
 def Cancela_Compras():
     st.session_state.df_compras = pd.DataFrame(
-        columns=["Nome", "Produto", "Quantidade", "Preco"])
+        columns=["Nome", "Produto", "Quantidade", "Preço"])
     switch_page("Tela_Nome")
 
 
