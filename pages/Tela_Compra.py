@@ -105,7 +105,7 @@ def Tela_Compra():
             st.error("Você não selecionou nenhum produto!!!", icon="🚨")
     Escreve_Compras()
     col_but2, col_but3,col_but4 = st.columns(3)
-    if product_input is None or st.session_state.Cancelando is True:
+    if product_input is None or "Cancelando" not in st.session_state:
         col_but2 = st.write(" ")
         col_but3 = st.write(" ")
     else:
