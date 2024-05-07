@@ -5,7 +5,9 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
-
+import time
+import threading
+from datetime import datetime
 db_config = {
     'host': st.secrets["DATABASE_HOST"],
     'user': st.secrets["DATABASE_USERNAME"],
@@ -117,6 +119,9 @@ def Tela_Compra():
             switch_page("Tela_Conclusao")
         if butao_cancelar:
             Cancela_Compras()
+        if butao_conclusao_fiado:
+            Finaliza_Compra(st.session_state.df_compras, False)
+
 
 
 def Salva_Compra():
@@ -161,7 +166,40 @@ def Cancela_Compras():
     st.session_state.df_compras = pd.DataFrame(
         columns=["Nome", "Produto", "Quantidade", "Preco"])
     switch_page("Tela_Nome")
+def Finaliza_Compra(df, FlagPagamento):
+    if 'travaDuploClick' not in st.session_state:
+        st.session_state.travaDuploClick = 0
+    st.session_state.travaDuploClick += 1
+    if st.session_state.travaDuploClick == 1:
+        # Dedicando um thread exclusivo pra subir no banco e não haver falhas
+        thread_envio = threading.Thread(
+            target=Envia_Dados_BD, args=(df, FlagPagamento))
+        thread_envio.start()
 
+    time.sleep(1)
+    time.sleep(1)
+
+    st.success("Venda Enviada com Sucesso")
+
+    st.balloons()
+    time.sleep(2)
+
+def Envia_Dados_BD(df, FlagPagamento):
+    datahora = datetime.now()
+    data = datetime.now().date()
+    datapagamento = data if FlagPagamento == 'Sim' else None
+    conn = pymysql.connect(**db_config)
+    cursor = conn.cursor()
+
+    for index, row in df.iterrows():
+        sql = "INSERT INTO fVendas (Data, Nome, Produto, Qtd, Valor, Pago, DataPagamento, Registro) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        values = (data, row['Nome'], row['Produto'], row['Quantidade'],
+                  row['Preco'], row['FlagPagamento'], datapagamento, datahora)
+        cursor.execute(sql, values)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    Cancela_Compras()
 
 if __name__ == "__main__":
     Tela_Compra()
