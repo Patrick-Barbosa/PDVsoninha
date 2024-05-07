@@ -47,7 +47,7 @@ def Tela_Conclusao():
         pass
     else:
         dataframe['FlagPagamento'] = False
-    st.dataframe(dataframe, hide_index=True,user_container_width = False)
+    st.dataframe(dataframe, hide_index=True,use_container_width=True)
     valor_total = np.sum(dataframe['Preco'])
 
     st.markdown(
