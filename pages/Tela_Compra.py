@@ -128,6 +128,7 @@ def Tela_Compra():
 
 def Salva_Compra():
     st.session_state.Cancelando = False
+    st.write(st.session_state.Cancelando)
     df_precos = Obtem_Preco_Banco()
     nome = st.session_state.name
     produto = df_precos.loc[df_precos['Filtro'] ==
