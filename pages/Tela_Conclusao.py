@@ -47,12 +47,12 @@ def Tela_Conclusao():
         pass
     else:
         dataframe['FlagPagamento'] = False
-    st.dataframe(dataframe, hide_index=True)
+    st.dataframe(dataframe, hide_index=True,user_container_width = False)
     valor_total = np.sum(dataframe['Preco'])
 
     st.markdown(
         f"<h1 style='font-size:30px;'>O Valor total da sua compra foi de <b>R$ {valor_total:.2f}</b></h1>", unsafe_allow_html=True)
-    st.write('Scaneie o QR CODE e faça o pagamento para **21 96475-0527**')
+    st.write('Scaneie o QR CODE e faça o pagamento para o telefone: **21 96475-0527**')
     st.image('img/pix.png', width=600)
     FlagPagamento = st.radio("**Você já pagou?**",
                              ["Sim", "Não"],
