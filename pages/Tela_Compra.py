@@ -32,98 +32,106 @@ def Obtem_Preco_Banco():
 
 
 def Tela_Compra():
-    st.markdown(
-        """
-    <style>
-    [data-testid="collapsedControl"] {
-        display: none
-    }
-    footer {
-        visibility: hidden;
-    }
-    footer:before{
-        content: '🧠 Feito por João, Hugo & Patrick';
-        visibility: visible;
-        display: block;
-    }
-    </style>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    Verifica_Compras_No_Session_State()
-    st.session_state.name = st.session_state.name
-    if "nomeimutavel" in st.session_state:  # foda!!
-        nome = st.session_state.nomeimutavel
-    else:
-        nome = st.session_state.name
-    df_precos = Obtem_Preco_Banco()
-    if 'travaDuploClick' not in st.session_state:
-        st.session_state.travaDuploClick = 0
-
-    st.title("Cardápio")
-    col1, col2 = st.columns([2, 1])
-    use_category_filter = st.checkbox("Deseja procurar por categoria?")
-
-    if use_category_filter:
-        category_input = st.selectbox(
-            "Selecione a categoria",
-            df_precos['Categoria'].unique(),
-            key='category',
-            index=None,
-            placeholder='Selecione a categoria'
+    try:
+        st.markdown(
+            """
+        <style>
+        [data-testid="collapsedControl"] {
+            display: none
+        }
+        footer {
+            visibility: hidden;
+        }
+        footer:before{
+            content: '🧠 Feito por João, Hugo & Patrick';
+            visibility: visible;
+            display: block;
+        }
+        </style>
+        """,
+            unsafe_allow_html=True,
         )
 
-    with col1:
-        product_input = st.selectbox(
-            "Selecione o produto consumido",
-            df_precos['Filtro'] if not use_category_filter else df_precos.query(
-                "Categoria==@category_input")['Filtro'],
-            key='product',
-            index=None,
-            placeholder='Selecione o produto'
-        )
-
-    with col2:
-        quantity_input = st.number_input(
-            "Selecione a quantidade comprada",
-            min_value=1,
-            max_value=10,
-            step=1,
-            key='quantity'
-        )
-
-    butao_comprar_mais = st.button("Adicionar ao carrinho", type='primary')
-
-    if butao_comprar_mais:
-        if product_input is not None and quantity_input != 0:
-            st.session_state.Flag_Clicou_aqui = True
-            Salva_Compra()
-            st.success(
-                f"{st.session_state.quantity} {df_precos.loc[df_precos['Filtro'] == st.session_state.product, 'Produto'].iloc[0]} adicionado ao carrinho!")
+        Verifica_Compras_No_Session_State()
+        st.session_state.name = st.session_state.name
+        if "nomeimutavel" in st.session_state:  # foda!!
+            nome = st.session_state.nomeimutavel
         else:
-            st.error("Você não selecionou nenhum produto!!!", icon="🚨")
-    Escreve_Compras()
-    col_but2, col_but3,col_but4 = st.columns(3)
-    if product_input is None or "Cancelando" not in st.session_state or st.session_state.Cancelando == True :
-        col_but2 = st.write(" ")
-        col_but3 = st.write(" ")
-    else:
+            nome = st.session_state.name
+        df_precos = Obtem_Preco_Banco()
+        if 'travaDuploClick' not in st.session_state:
+            st.session_state.travaDuploClick = 0
+
+        st.title("Cardápio")
+        col1, col2 = st.columns([2, 1])
+        use_category_filter = st.checkbox("Deseja procurar por categoria?")
+
+        if use_category_filter:
+            category_input = st.selectbox(
+                "Selecione a categoria",
+                df_precos['Categoria'].unique(),
+                key='category',
+                index=None,
+                placeholder='Selecione a categoria'
+            )
+
+        with col1:
+            product_input = st.selectbox(
+                "Selecione o produto consumido",
+                df_precos['Filtro'] if not use_category_filter else df_precos.query(
+                    "Categoria==@category_input")['Filtro'],
+                key='product',
+                index=None,
+                placeholder='Selecione o produto'
+            )
+
+        with col2:
+            quantity_input = st.number_input(
+                "Selecione a quantidade comprada",
+                min_value=1,
+                max_value=10,
+                step=1,
+                key='quantity'
+            )
+
+        butao_comprar_mais = st.button("Adicionar ao carrinho", type='primary')
+
+        if butao_comprar_mais:
+            if product_input is not None and quantity_input != 0:
+                st.session_state.Flag_Clicou_aqui = True
+                Salva_Compra()
+                st.success(
+                    f"{st.session_state.quantity} {df_precos.loc[df_precos['Filtro'] == st.session_state.product, 'Produto'].iloc[0]} adicionado ao carrinho!")
+            else:
+                st.error("Você não selecionou nenhum produto!!!", icon="🚨")
+        Escreve_Compras()
+        col_but2, col_but3,col_but4 = st.columns(3)
         with col_but2:
             butao_conclusao_fiado = st.button("Finalizar a Compra no Fiado")
         with col_but3:
             butao_conclusao_pagamento= st.button("Ir para a Tela de Pagamento")
         with col_but4:
             butao_cancelar = st.button("Cancelar Compras")
-        if butao_conclusao_pagamento:
-            switch_page("Tela_Conclusao")
-        if butao_cancelar:
-            Cancela_Compras()
-        if butao_conclusao_fiado:
-            Finaliza_Compra(st.session_state.df_compras, False)
-            st.session_state.clear()
-            switch_page("Tela_Nome")
 
+        if st.session_state.df_compras.shape[0] == 0 or "Cancelando" not in st.session_state or st.session_state.Cancelando == True :
+            col_but2 = st.write(" ")
+            col_but3 = st.write(" ")
+        else:
+            if butao_conclusao_pagamento:
+                switch_page("Tela_Conclusao")
+            if butao_cancelar:
+                Cancela_Compras()
+            if butao_conclusao_fiado:
+                Finaliza_Compra(st.session_state.df_compras, False)
+                st.session_state.clear()
+                switch_page("Tela_Nome")
+    except Exception as e:
+        st.title('Ops, erro no sistema')
+        st.text('Voltando a página inicial')
+        print(e)
+        time.sleep(2)
+        switch_page("Tela_Nome")
+    
 
 
 def Salva_Compra():
@@ -141,13 +149,6 @@ def Salva_Compra():
     st.session_state.df_compras = pd.concat(
         [st.session_state.df_compras, nova_compra], ignore_index=True)
 
-    # Código estava dando erro pq não tem atributo append
-    # AttributeError: 'DataFrame' object has no attribute 'append'
-    # st.session_state.df_compras = st.session_state.df_compras.append({"Nome":nome,
-    # "Quantidade":quantidade,
-    #                                                              "Preco":preco},ignore_index=True)
-
-
 def Escreve_Compras():
     st.subheader("Compras Registradas:")
     if not st.session_state.df_compras.empty:
@@ -157,13 +158,11 @@ def Escreve_Compras():
     else:
         st.text("Nenhuma compra registrada.")
 
-
 def Verifica_Compras_No_Session_State():
     if 'df_compras' not in st.session_state:
         st.session_state.df_compras = pd.DataFrame(
             columns=["Nome", "Produto", "Quantidade", "Preco"])
         return st.session_state.df_compras
-
 
 def Cancela_Compras():
     st.session_state.df_compras = pd.DataFrame(
@@ -182,8 +181,6 @@ def Finaliza_Compra(df, FlagPagamento):
 
     time.sleep(0.5)
     time.sleep(0.5)
-
-    
 
     st.balloons()
     
