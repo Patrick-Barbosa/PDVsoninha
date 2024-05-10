@@ -39,15 +39,18 @@ def Tela_Conclusao():
     """,
         unsafe_allow_html=True,
     )
-
-    dataframe = st.session_state.df_compras
-    st.title("Pagamento")
-
-    if 'FlagPagamento' in dataframe.columns:
-        pass
-    else:
-        dataframe['FlagPagamento'] = False
     
+    if 'flagPagamento' not in st.session_state:
+        st.session_state.flagPagamento = 'Não'
+    
+    dataframe = st.session_state.df_compras
+
+    dataframe['FlagPagamento'] = st.session_state.flagPagamento == 'Sim'
+
+    if 'FlagPagamento' not in dataframe.columns:
+        dataframe['FlagPagamento'] = False
+
+    st.title("Pagamento")    
     
     st.dataframe(dataframe, hide_index=True)
     valor_total = np.sum(dataframe['Preco'])
@@ -56,11 +59,14 @@ def Tela_Conclusao():
         f"<h1 style='font-size:30px;'>O Valor total da sua compra foi de <b>R$ {valor_total:.2f}</b></h1>", unsafe_allow_html=True)
     st.write('Scaneie o QR CODE e faça o pagamento para o telefone: **21 96475-0527**')
     st.image('img/pix.png', width=600)
-    FlagPagamento = st.radio("**Você já pagou?**",
+    widgetPagamento = st.radio("**Você já pagou?**",
                              ["Sim", "Não"],
-                             index=1)
-
+                             index=1, key='flagPagamento2')
+    
     col1, col2, col3, col4,col5,col6 = st.columns(6)
+    if widgetPagamento != st.session_state.flagPagamento:
+        st.session_state.flagPagamento = widgetPagamento
+        st.rerun()
 
     with col1:
         butao_finaliza_compra = st.button("Finalizar a Compra", type='primary')
@@ -68,14 +74,8 @@ def Tela_Conclusao():
     with col2:
         butao_cancela_compra = st.button("Cancelar a Compra")
 
-    if FlagPagamento == 'Sim':
-        FlagPagamentoBool = True
-    elif FlagPagamento == 'Não':
-        FlagPagamentoBool = False
-    dataframe['FlagPagamento'] = FlagPagamentoBool
-
     if butao_finaliza_compra:
-        Finaliza_Compra(dataframe, FlagPagamento)
+        Finaliza_Compra(dataframe, st.session_state.flagPagamento)
 
     if butao_cancela_compra:
         Cancela_Compras()
@@ -104,7 +104,6 @@ def Finaliza_Compra(df, FlagPagamento):
 def Volta_Tela_Anterior():
     st.session_state.name = st.session_state.df_compras['Nome'].unique()[0]
     switch_page("Tela_Compra")
-
 
 def Cancela_Compras():
     st.session_state.df_compras = pd.DataFrame(
