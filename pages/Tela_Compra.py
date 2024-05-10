@@ -196,7 +196,7 @@ def Envia_Dados_BD(df, FlagPagamento):
     for index, row in df.iterrows():
         sql = "INSERT INTO fVendas (Data, Nome, Produto, Qtd, Valor, Pago, DataPagamento, Registro) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         values = (data, row['Nome'], row['Produto'], row['Quantidade'],
-                  row['Preco'], row['FlagPagamento'], datapagamento, datahora)
+                  row['Preco'], FlagPagamento, datapagamento, datahora)
         cursor.execute(sql, values)
     conn.commit()
     cursor.close()
