@@ -123,9 +123,7 @@ def Tela_Compra():
                 Cancela_Compras()
             if butao_conclusao_fiado:
                 Finaliza_Compra(st.session_state.df_compras, False)
-                st.session_state.df_compras = pd.DataFrame(
-                    columns=["Nome", "Produto", "Quantidade", "Preco"])
-                st.session_state.name = None
+                st.session_state.clear()
                 switch_page("Tela_Nome")
     except Exception as e:
         st.title('Ops, erro no sistema')
