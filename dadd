@@ -1,0 +1,249 @@
+[33mcommit 0194b6a4277a6e6c52e4ccc97ef7eef6fd1e4678[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: da2d8bb 3f5dd03
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Thu May 9 21:26:18 2024 -0300
+
+    Merge pull request #3 from Patrick-Barbosa/voltandoAgoraaaa
+    
+    voltando commit sei lar
+
+[33mcommit 3f5dd0374f600fe8df36354cdedf07c76743b18a[m[33m ([m[1;32mvoltandoAgoraaaa[m[33m)[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Thu May 9 21:24:52 2024 -0300
+
+    voltando commit sei lar
+
+[33mcommit da2d8bbbadad490f6af6a082d8dd857213c2932c[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:21:22 2024 -0300
+
+    Revert "Finalização!!!"
+    
+    This reverts commit 09caa554da66c3f0391c7ed9dd4909e38dcbc534.
+
+[33mcommit 030a421692451c45c66221832a6723c1307f5057[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:18:33 2024 -0300
+
+    testando uma invenção
+
+[33mcommit 969cdb91dc44b0b228e5104ab927e771959bbf7a[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:16:42 2024 -0300
+
+    mais um ajuste
+
+[33mcommit 5dc4df1c86f56d0cd516024f484af35996962ca5[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:16:07 2024 -0300
+
+    ajustando debug
+
+[33mcommit 0fe1b532956984c34984d10427a963a1baa73dc8[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:15:23 2024 -0300
+
+    criando mais código de debug
+
+[33mcommit 8cf9a8d9a77cb6e847987f261db43154300cac59[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:13:20 2024 -0300
+
+    testando try except usando cache do navegador
+
+[33mcommit 06dc734979b7fa4c2db1e9317019ff585139fcad[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:08:49 2024 -0300
+
+    testando solucao com try except
+
+[33mcommit f024826a3d2ae33d57f431e7128e53278bea40f6[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:06:27 2024 -0300
+
+    corrigindo bug doido
+
+[33mcommit 2ea5e691c0c89b49319d6c506e297cc27420ad87[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:05:42 2024 -0300
+
+    aplicando pro trecho superior
+
+[33mcommit 9143dccf1f70ea4923e76bf9bebca67989cdda72[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:05:11 2024 -0300
+
+    tentando com st table
+
+[33mcommit 9ec661d72b9508e9cfd84007a93a703e946bc557[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:04:26 2024 -0300
+
+    atualizando exibicao do dataframe
+
+[33mcommit bed79f0d3c260ad438a3f4f954c7602beb17e939[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 01:01:22 2024 -0300
+
+    testando trocar a ordem
+
+[33mcommit 252033bb4a3bbea0e5ad00b22f82cc8a158b222e[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Wed May 8 00:39:58 2024 -0300
+
+    subindo debug
+
+[33mcommit 09caa554da66c3f0391c7ed9dd4909e38dcbc534[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 19:07:41 2024 -0300
+
+    Finalização!!!
+
+[33mcommit c75f353ad6d0565680a86c951f0e4cdaa3580473[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 19:06:38 2024 -0300
+
+    Tentando diminuir o tempo
+
+[33mcommit f2cbfd849d96d22d4bfa220a8730c1da840df84f[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 19:04:04 2024 -0300
+
+    Colocando o Cancelando como fator na validação de dados
+
+[33mcommit c2b1e1a6dba81db8bd297d067a34f4080282642a[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 19:02:07 2024 -0300
+
+    Tentando colocar o debug do Cancelando
+
+[33mcommit 8d5d264dfe1faa4b7244332964aba04a7c017df2[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 19:00:43 2024 -0300
+
+    Tentando colocar tudo
+
+[33mcommit e29beefc896c3ef62fa400ebf0cb75f45302d1b5[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:56:43 2024 -0300
+
+    Ajustando o cancelando do session state
+
+[33mcommit 94ab0fea675d9b0ed65f73ffa14fc472dea0ecc4[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:55:27 2024 -0300
+
+    Colocando a flag cancelando para nao aparecer os butoes quando estiver cancelando
+
+[33mcommit 1941cd1b27e4ce6a89e8c65c13e99ab261979a1b[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:49:28 2024 -0300
+
+    Colocando o Success apos o baloes
+
+[33mcommit 14c38282ce74918127930fc276241f99e39daa34[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:47:28 2024 -0300
+
+    Colocando os parentesis no clear
+
+[33mcommit b051ae4b95437fbb533630fbbd9ffbd6e0f69cf0[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:46:34 2024 -0300
+
+    Limpando o session state
+
+[33mcommit 8f8daaa08ae70d763dc8f2bafc5a78ea1d1fd6db[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:42:15 2024 -0300
+
+    Colocando um tempo de 3 segundos antes de mudar de página
+
+[33mcommit 0d733f6fa93c2db8229fa151ddfc60c77e74b2a0[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:40:01 2024 -0300
+
+    Colocando butão de Fiado
+
+[33mcommit e44ce580e3f8d5d4a4ab20195837c97d4066b0b1[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:31:32 2024 -0300
+
+    Colocando a Tela de Fiado no Sonia Tech
+
+[33mcommit 1ce2352821b8d0fec124107a3805189474fb6784[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:25:42 2024 -0300
+
+    Update Tela_Conclusao.py
+
+[33mcommit f078b140ae3e5f074d02c57b4de2f254f0dc2200[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:23:02 2024 -0300
+
+    Colocando o print
+
+[33mcommit 1289960d58d52fe9643e63640e932fa9cf41665d[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:19:37 2024 -0300
+
+    Ajustando o ajuste
+
+[33mcommit 904efccda26f7f356632c4b6ba3d6107399f4678[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:15:19 2024 -0300
+
+    Colocando o hide index equals true
+
+[33mcommit 12347559468649377205cd9fbdb24429c6b37fba[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:13:17 2024 -0300
+
+    Colocando o width em 30
+
+[33mcommit 5e902ea679b09a8254310039c6fb0baaff1325c4[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:12:06 2024 -0300
+
+    Ajustando largura para 10
+
+[33mcommit 373fd9bf91d93aa6ecef4c8e41093e3817d754bc[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:07:31 2024 -0300
+
+    Ajustando a width
+
+[33mcommit bd4013553c67e6f2055373fdf9f427d5eadc35c9[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:05:21 2024 -0300
+
+    Ajustando a Largura e o Texto do stwrite
+
+[33mcommit 13267979aa912bbcb2ef5c23a23cc94fe6055722[m
+Merge: 8d293e9 c91e714
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:01:45 2024 -0300
+
+    Merge branch 'main' of https://github.com/Patrick-Barbosa/PDVsoninha
+
+[33mcommit 8d293e918b8d3034884094a60c8511918543f7d7[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Tue May 7 18:00:46 2024 -0300
+
+    atualizacao
+
+[33mcommit c91e714ca07af546653ec36bee7d85b595c38047[m
+Author: Patrick Barbosa <patrick.oliveira27@hotmail.com>
+Date:   Sat Apr 20 10:19:35 2024 -0300
+
+    removendo certificado .pem
+
+[33mcommit 25fbfd4eaa66e1f1d5cf34484920e4961bc7732f[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:   Wed Apr 17 18:32:57 2024 -0300
+
+    Ajustando colunas
+
+[33mcommit 67dcec226a3208465cd77f0ded5ce4231899af3b[m
+Author: João Victor da Silva Araújo <jvsilvaaraujo98@gmail.com>
+Date:
