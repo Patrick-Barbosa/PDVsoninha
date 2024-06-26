@@ -116,6 +116,7 @@ def Tela_Compra():
         if st.session_state.df_compras.shape[0] == 0 or "Cancelando" not in st.session_state or st.session_state.Cancelando == True :
             col_but2 = st.write(" ")
             col_but3 = st.write(" ")
+            col_but4 = st.write(" ")
         else:
             if butao_conclusao_pagamento:
                 switch_page("Tela_Conclusao")
