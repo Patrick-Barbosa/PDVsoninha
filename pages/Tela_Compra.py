@@ -120,7 +120,6 @@ def Tela_Compra():
             if butao_conclusao_pagamento:
                 switch_page("Tela_Conclusao")
             if butao_cancelar:
-                st.session_state.clear()
                 switch_page("Tela_Nome")
             if butao_conclusao_fiado:
                 Finaliza_Compra(st.session_state.df_compras, False)
