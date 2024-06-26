@@ -120,7 +120,7 @@ def Tela_Compra():
             if butao_conclusao_pagamento:
                 switch_page("Tela_Conclusao")
             if butao_cancelar:
-                switch_page("Tela_Nome")
+                Cancela_Compras()
             if butao_conclusao_fiado:
                 Finaliza_Compra(st.session_state.df_compras, False)
                 st.session_state.clear()
@@ -165,6 +165,7 @@ def Verifica_Compras_No_Session_State():
         return st.session_state.df_compras
 
 def Cancela_Compras():
+    st.session_state.Cancelando = True
     st.session_state.df_compras = pd.DataFrame(
         columns=["Nome", "Produto", "Quantidade", "Preco"])
     switch_page("Tela_Nome")
