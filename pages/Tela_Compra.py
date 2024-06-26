@@ -112,17 +112,11 @@ def Tela_Compra():
             butao_conclusao_pagamento= st.button("Ir para a Tela de Pagamento")
         with col_but4:
             butao_cancelar = st.button("Cancelar Compras")
-
-        if st.session_state.df_compras.shape[0] == 0 or "Cancelando" not in st.session_state or st.session_state.Cancelando == True :
-            col_but2 = st.write(" ")
-            col_but3 = st.write(" ")
-            col_but4 = st.write(" ")
-        else:
-            if butao_conclusao_pagamento:
+        if butao_conclusao_pagamento:
                 switch_page("Tela_Conclusao")
-            if butao_cancelar:
+        if butao_cancelar:
                 Cancela_Compras()
-            if butao_conclusao_fiado:
+        if butao_conclusao_fiado:
                 Finaliza_Compra(st.session_state.df_compras, False)
                 st.session_state.clear()
                 switch_page("Tela_Nome")
