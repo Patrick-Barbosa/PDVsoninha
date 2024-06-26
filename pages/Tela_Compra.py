@@ -166,8 +166,7 @@ def Verifica_Compras_No_Session_State():
 
 def Cancela_Compras():
     st.session_state.Cancelando = True
-    st.session_state.df_compras = pd.DataFrame(
-        columns=["Nome", "Produto", "Quantidade", "Preco"])
+    st.session_state.clear()
     switch_page("Tela_Nome")
 def Finaliza_Compra(df, FlagPagamento):
     st.session_state.Cancelando = True
