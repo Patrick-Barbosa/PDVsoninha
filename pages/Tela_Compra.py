@@ -107,7 +107,7 @@ def Tela_Compra():
         Escreve_Compras()
         col_but2, col_but3,col_but4 = st.columns(3)
         with col_but2:
-            butao_conclusao_fiado = st.button("Finalizar a Compra e Pagar Depois")
+            butao_conclusao_fiado = st.button("Finalizar Compra no Fiado")
         with col_but3:
             butao_conclusao_pagamento= st.button("Ir para a Tela de Pagamento")
         with col_but4:
@@ -115,7 +115,8 @@ def Tela_Compra():
         if butao_conclusao_pagamento:
                 switch_page("Tela_Conclusao")
         if butao_cancelar:
-                Cancela_Compras()
+                st.session_state.clear()
+                switch_page("Tela_Nome")
         if butao_conclusao_fiado:
                 Finaliza_Compra(st.session_state.df_compras, False)
                 st.session_state.clear()
@@ -161,7 +162,8 @@ def Verifica_Compras_No_Session_State():
 
 def Cancela_Compras():
     st.session_state.Cancelando = True
-    st.session_state.clear()
+    st.session_state.df_compras = pd.DataFrame(
+        columns=["Nome", "Produto", "Quantidade", "Preco"])
     switch_page("Tela_Nome")
 def Finaliza_Compra(df, FlagPagamento):
     st.session_state.Cancelando = True

@@ -71,6 +71,13 @@ def tela_inicial():
             switch_page("Tela_Pagamento")
         elif botao_pagemento and nome == None:
             st.error("Você não digitou um nome", icon="🚨")
+    st.write(' ')
+    st.markdown(
+        """
+        Seu nome não está aqui? [Clique Aqui](https://forms.office.com/Pages/ResponsePage.aspx?id=3GyatybLvU2MnuuPjHR9r4pFuuHnKhJGn0b9oLFKKfhUMUZNR0JERVFTRExPWEhBSFlERU1YREFNNi4u)
+        """,
+        unsafe_allow_html=True
+    )
     st.divider()
 
 
