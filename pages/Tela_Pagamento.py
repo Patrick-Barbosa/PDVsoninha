@@ -1,21 +1,11 @@
-## import bd
-import pymysql
-
 ## import normal :D
 import streamlit as st
 from datetime import datetime
 import pandas as pd
 import time
 from streamlit_extras.switch_page_button import switch_page
-
-# Configurações do banco de dados
-db_config = {
-    'host': st.secrets["DATABASE_HOST"],
-    'user': st.secrets["DATABASE_USERNAME"],
-    'password': st.secrets["DATABASE_PASSWORD"],
-    'database': st.secrets["DATABASE"],
-    'autocommit': True,
-}
+from db_config import get_postgres_conn
+from sqlalchemy import text
 
 st.markdown(
     """
@@ -44,97 +34,93 @@ def des(key):
     
 def base(nomeCliente):
     try:
-        conn = pymysql.connect(**db_config)
-        cursor = conn.cursor()
-        query = f"SELECT * FROM fVendas WHERE Nome = '{nomeCliente}'"
-        cursor.execute(query)
-
-        # Obter os resultados
-        results = cursor.fetchall()
-
-        # Obter os nomes das colunas
-        columns = [desc[0] for desc in cursor.description]
-        # Criar um DataFrame com os resultados
-        df = pd.DataFrame(results, columns=columns)
-        cursor.close()
-        conn.close()
+        conn = get_postgres_conn()
+        df = conn.query(f"SELECT * FROM dev.fvendas WHERE nome = '{nomeCliente}'", ttl = 0)
         return df
-
-    except pymysql.Error as e:
-        print("MySQL Error:", e)
+    except Exception as e:
+        print("Database Error:", e)
 
 def atualizar(base):
-    conn = pymysql.connect(**db_config)
-    cursor = conn.cursor()
-    for index, row in base.iterrows():
-        # Construir a parte da instrução SQL para a coluna DataPagamento
-        if pd.isna(row['DataPagamento']):
-            data_pagamento = "NULL"
-        else:
-            data_pagamento = f"'{row['DataPagamento']}'"
-
-        update_query = f"UPDATE fVendas SET `Data` = '{row['Data']}', Nome = '{row['Nome']}', Produto = '{row['Produto']}', Qtd = {row['Qtd']}, Valor = {row['Valor']}, Pago = {row['Pago']}, DataPagamento = {data_pagamento}, Registro = '{row['Registro']}' WHERE ID = {row['ID']}"
-
-        # Executar a instrução SQL UPDATE
-        cursor.execute(update_query)
-
-    cursor.close()
-    conn.close()
+    conn = get_postgres_conn()
+    with conn.session as session:
+        for index, row in base.iterrows():
+            query = text("""
+                UPDATE dev.fvendas 
+                SET data = :data, 
+                    nome = :nome, 
+                    produto = :produto, 
+                    qtd = :qtd, 
+                    valor = :valor, 
+                    pago = :pago, 
+                    data_pagamento = :data_pagamento, 
+                    registro = :registro 
+                WHERE id = :id
+            """)
+            session.execute(query, {
+                "data": row['data'],
+                "nome": row['nome'],
+                "produto": row['produto'],
+                "qtd": row['qtd'],
+                "valor": row['valor'],
+                "pago": row['pago'],
+                "data_pagamento": row['data_pagamento'] if pd.notna(row['data_pagamento']) else None,
+                "registro": row['registro'],
+                "id": row['id']
+            })
+        session.commit()
 
 def resetcheck():
     return False
 
 try:
-    st.session_state.name = st.session_state.name
-    if "nomeimutavel" in st.session_state: ##foda!!
-        nome = st.session_state.nomeimutavel
-    else:
-        nome = st.session_state.name
+    if 'name' not in st.session_state:
+        st.session_state.name = None
+    nome = st.session_state.name
 
     st.title('Tela de Pagamento')
 
-    colunas_usadas = ['Pago', 'Valor', 'Qtd', 'Produto', 'Nome','Data']
+    colunas_usadas = ['pago', 'valor', 'qtd', 'produto', 'nome', 'data']
     df = base(nome)
 
-    df_nao_pago = df_nao_pago = df[df['Pago'] == 0]
-    df_nao_pago['Pago'] = df_nao_pago['Pago'].replace(0, False)
+    df_nao_pago = df[df['pago'] == False]
+    #df_nao_pago['pago'] = df_nao_pago['pago'].replace(0, False)
 
     if len(df_nao_pago) != 0:
         st.caption('💡 Para pagar uma dívida, selecione as linhas na tabela ou selecione a opção abaixo para pagar tudo.')
         pagamento = st.selectbox('Deseja pagar tudo?:', ['Pagar linhas selecionadas', 'Pagar tudo'],placeholder="Selecione uma opção", index=None, key='pagamento')
-        divida = df_nao_pago['Valor'].sum()
+        divida = df_nao_pago['valor'].sum()
         st.write(f'O total de dívidas é :red[R$: {divida}]')
         
-        df_nao_pago['Valor'] = df_nao_pago['Valor'].astype(float)
+        df_nao_pago['valor'] = df_nao_pago['valor'].astype(float)
         
         df_editavel = st.data_editor(
             df_nao_pago[colunas_usadas],
             key='db',
             hide_index=True,
             column_config={
-                "Valor": st.column_config.NumberColumn(
+                "valor": st.column_config.NumberColumn(
                     "Valor",
                     help="Valor devido",
                     format="R$: %.2f",
                     disabled=True,
                     step=0.01,
                 ),
-                "Qtd": st.column_config.TextColumn(
+                "qtd": st.column_config.TextColumn(
                     "Qtd",
                     help="Quantidade",
                     disabled=True,
                 ),
-                "Produto": st.column_config.TextColumn(
+                "produto": st.column_config.TextColumn(
                     "Produto",
                     help="Nome do Produto",
                     disabled=True,
                 ),
-                "Nome": st.column_config.TextColumn(
+                "nome": st.column_config.TextColumn(
                     "Nome",
                     help="Nome do pagador",
                     disabled=True,
                 ),
-                "Data":st.column_config.DateColumn(
+                "data":st.column_config.DateColumn(
                     "Data de Compra",
                     help="Data de Compra",
                     format="DD/MM/YYYY",
@@ -148,8 +134,8 @@ try:
             botao = st.button('Confirmar', disabled=not des('pagamento'), type='primary')
         if pagamento == 'Pagar tudo':
             try:
-                df_editavel['Pago'] = True
-                soma_valores_pago = df_editavel.loc[df_editavel['Pago'] == True, 'Valor'].sum()
+                df_editavel['pago'] = True
+                soma_valores_pago = df_editavel.loc[df_editavel['pago'] == True, 'valor'].sum()
                 st.write(f'Deseja aliviar a dívida de :red[R$:{soma_valores_pago}?]')
                 st.image('img/pix.png', width=600)
 
@@ -157,7 +143,7 @@ try:
                 st.error('Filtre outra pessoa')
         if pagamento == 'Pagar linhas selecionadas':
             try:
-                soma_valores_pago = df_editavel.loc[df_editavel['Pago'] == True, 'Valor'].sum()
+                soma_valores_pago = df_editavel.loc[df_editavel['pago'] == True, 'valor'].sum()
                 if soma_valores_pago == 0:
                     st.write(':red[Selecione uma linha para dar baixa.]')
                 else:
@@ -177,7 +163,7 @@ try:
             else:
                 df_nao_pago.update(df_editavel)
                 hoje = datetime.now().strftime('%Y-%m-%d')
-                df_nao_pago.loc[(df_nao_pago['Pago'] == True) & (df_nao_pago['DataPagamento'].isnull() | (df_nao_pago['DataPagamento'] == '')), 'DataPagamento'] = hoje
+                df_nao_pago.loc[(df_nao_pago['pago'] == True) & (df_nao_pago['data_pagamento'].isnull() | (df_nao_pago['data_pagamento'] == '')), 'data_pagamento'] = hoje
                 atualizar(df_nao_pago)
                 st.success('Dados atualizados!')
                 st.balloons()
@@ -195,6 +181,5 @@ try:
 except Exception as e:
     st.title('Ops, erro no sistema')
     st.text('Voltando a página inicial')
-    print(e)
-    time.sleep(2)
-    switch_page("Tela_Nome")
+    #time.sleep(2)
+    #switch_page("Tela_Nome")

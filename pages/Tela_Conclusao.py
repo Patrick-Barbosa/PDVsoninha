@@ -4,17 +4,9 @@ import numpy as np
 import pandas as pd
 import time
 from streamlit_extras.switch_page_button import switch_page
-import pymysql
 import threading
-
-db_config = {
-    'host': st.secrets["DATABASE_HOST"],
-    'user': st.secrets["DATABASE_USERNAME"],
-    'password': st.secrets["DATABASE_PASSWORD"],
-    'database': st.secrets["DATABASE"],
-    'autocommit': True,
-}
-
+from db_config import get_postgres_conn
+from sqlalchemy import text
 
 def Tela_Conclusao():
     try:
@@ -126,17 +118,25 @@ def Envia_Dados_BD(df, FlagPagamento):
     datahora = datetime.now()
     data = datetime.now().date()
     datapagamento = data if FlagPagamento == 'Sim' else None
-    conn = pymysql.connect(**db_config)
-    cursor = conn.cursor()
-
-    for index, row in df.iterrows():
-        sql = "INSERT INTO fVendas (Data, Nome, Produto, Qtd, Valor, Pago, DataPagamento, Registro) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-        values = (data, row['Nome'], row['Produto'], row['Quantidade'],
-                  row['Preco'], row['FlagPagamento'], datapagamento, datahora)
-        cursor.execute(sql, values)
-    conn.commit()
-    cursor.close()
-    conn.close()
+    
+    conn = get_postgres_conn()
+    with conn.session as session:
+        for index, row in df.iterrows():
+            query = text("""
+                INSERT INTO dev.fvendas (data, nome, produto, qtd, valor, pago, data_pagamento, registro)
+                VALUES (:data, :nome, :produto, :qtd, :valor, :pago, :data_pagamento, :registro)
+            """)
+            session.execute(query, {
+                "data": data,
+                "nome": row['Nome'],
+                "produto": row['Produto'],
+                "qtd": row['Quantidade'],
+                "valor": row['Preco'],
+                "pago": row['FlagPagamento'],
+                "data_pagamento": datapagamento,
+                "registro": datahora
+            })
+        session.commit()
 
 
 if __name__ == "__main__":
