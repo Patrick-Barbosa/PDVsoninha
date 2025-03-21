@@ -7,6 +7,9 @@ from streamlit_extras.switch_page_button import switch_page
 from db_config import get_postgres_conn
 from sqlalchemy import text
 
+# Define schema
+SCHEMA = st.secrets["schema"]
+
 st.markdown(
     """
     <style>
@@ -35,7 +38,7 @@ def des(key):
 def base(nomeCliente):
     try:
         conn = get_postgres_conn()
-        df = conn.query(f"SELECT * FROM dev.fvendas WHERE nome = '{nomeCliente}'", ttl = 0)
+        df = conn.query(f"SELECT * FROM {SCHEMA}.fvendas WHERE nome = '{nomeCliente}'", ttl = 0)
         return df
     except Exception as e:
         print("Database Error:", e)
@@ -44,8 +47,8 @@ def atualizar(base):
     conn = get_postgres_conn()
     with conn.session as session:
         for index, row in base.iterrows():
-            query = text("""
-                UPDATE dev.fvendas 
+            query = text(f"""
+                UPDATE {SCHEMA}.fvendas 
                 SET data = :data, 
                     nome = :nome, 
                     produto = :produto, 

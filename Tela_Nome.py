@@ -3,17 +3,10 @@ import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 from db_config import get_postgres_conn
 
-db_config = {
-    'host': st.secrets["DATABASE_HOST"],
-    'user': st.secrets["DATABASE_USERNAME"],
-    'password': st.secrets["DATABASE_PASSWORD"],
-    'database': st.secrets["DATABASE"],
-    'autocommit': True,
-}
-
 def Nomes():
     conn = get_postgres_conn()
-    df = conn.query("SELECT nome FROM dev.dclientes", ttl = 10)
+    schema = st.secrets["schema"]
+    df = conn.query(f"SELECT nome FROM {schema}.dclientes", ttl = 10)
     return df
 
 

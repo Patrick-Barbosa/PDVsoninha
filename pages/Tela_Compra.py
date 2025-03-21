@@ -9,20 +9,13 @@ from datetime import datetime
 from db_config import get_postgres_conn
 from sqlalchemy import text
 
-db_config = {
-    'host': st.secrets["DATABASE_HOST"],
-    'user': st.secrets["DATABASE_USERNAME"],
-    'password': st.secrets["DATABASE_PASSWORD"],
-    'database': st.secrets["DATABASE"],
-    'autocommit': True,
-}
-
 st.session_state.travaDuploClick = 0
 
+schema = st.secrets["schema"]
 
 def Obtem_Preco_Banco():
     conn = get_postgres_conn()
-    df_precos = conn.query("SELECT * FROM dev.dprodutos", ttl=10)
+    df_precos = conn.query(f"SELECT * FROM {schema}.dprodutos", ttl=10)
     df_precos = df_precos.sort_values(
         'data', ascending=False).drop_duplicates('produto')
     df_precos['Filtro'] = df_precos['produto'] + \
@@ -213,8 +206,8 @@ def Envia_Dados_BD(df, FlagPagamento):
     
     with conn.session as session:
         for index, row in df.iterrows():
-            query = text("""
-                INSERT INTO dev.fvendas 
+            query = text(f"""
+                INSERT INTO {schema}.fvendas 
                 (data, nome, produto, qtd, valor, pago, data_pagamento, registro)
                 VALUES (:data, :nome, :produto, :qtd, :valor, :pago, :data_pagamento, :registro)
             """)

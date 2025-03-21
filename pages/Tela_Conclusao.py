@@ -8,6 +8,8 @@ import threading
 from db_config import get_postgres_conn
 from sqlalchemy import text
 
+schema = st.secrets["schema"]
+
 def Tela_Conclusao():
     try:
         # Define a configuração de página para usar o layout wide por padrão
@@ -122,8 +124,8 @@ def Envia_Dados_BD(df, FlagPagamento):
     conn = get_postgres_conn()
     with conn.session as session:
         for index, row in df.iterrows():
-            query = text("""
-                INSERT INTO dev.fvendas (data, nome, produto, qtd, valor, pago, data_pagamento, registro)
+            query = text(f"""
+                INSERT INTO {schema}.fvendas (data, nome, produto, qtd, valor, pago, data_pagamento, registro)
                 VALUES (:data, :nome, :produto, :qtd, :valor, :pago, :data_pagamento, :registro)
             """)
             session.execute(query, {
