@@ -7,6 +7,8 @@ def Nomes():
     conn = get_postgres_conn()
     schema = st.secrets["schema"]
     df = conn.query(f"SELECT nome FROM {schema}.dclientes", ttl = 10)
+    df['nome'] = df['nome'].str.title()
+    df = df.sort_values('nome')  # Sort names alphabetically
     return df
 
 
@@ -20,11 +22,8 @@ def tela_inicial():
     st.markdown(
         """
     <style>
-    [data-testid="collapsedControl"] {
+    [data-testid="stSidebarCollapsedControl"] {
         display: none
-    }
-    footer {
-        visibility: hidden;
     }
     footer:before{
         content: '🧠 Feito por João, Hugo & Patrick';

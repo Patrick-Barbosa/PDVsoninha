@@ -55,7 +55,10 @@ def Tela_Compra():
         if 'travaDuploClick' not in st.session_state:
             st.session_state.travaDuploClick = 0
 
-        st.title("Cardápio")
+        # Get first name by splitting the full name
+        first_name = st.session_state.name.split()[0] if st.session_state.name else ""
+        st.title(f"Olá, {first_name}.")
+        st.subheader("O que deseja pedir hoje?")
         col1, col2 = st.columns([2, 1])
         use_category_filter = st.checkbox("Deseja procurar por categoria?")
 
@@ -124,8 +127,9 @@ def Tela_Compra():
         st.title('Ops, erro no sistema')
         st.text('Voltando a página inicial')
         print(e)
+        st.write(e)
         time.sleep(2)
-        switch_page("Tela_Nome")
+        #switch_page("Tela_Nome")
     
 
 
@@ -136,34 +140,94 @@ def Salva_Compra():
     produto = df_precos.loc[df_precos['Filtro'] ==
                             st.session_state.product, 'produto'].iloc[0]
     quantidade = st.session_state.quantity
-    preco = df_precos.query("produto==@produto")['valor'].iloc[0] * quantidade
+    preco_unitario = df_precos.query("produto==@produto")['valor'].iloc[0]
+    preco = preco_unitario * quantidade
 
-    # Fix concatenation warning by ensuring consistent dtypes
     nova_compra = pd.DataFrame({
         "Nome": [nome], 
         "Produto": [produto], 
         "Quantidade": [quantidade], 
+        "Preco_Unitario": [preco_unitario],
         "Preco": [preco]
     }).astype({
         "Nome": str,
         "Produto": str,
         "Quantidade": int,
+        "Preco_Unitario": float,
         "Preco": float
     })
 
     if st.session_state.df_compras.empty:
         st.session_state.df_compras = nova_compra
     else:
-        st.session_state.df_compras = pd.concat(
-            [st.session_state.df_compras, nova_compra], 
-            ignore_index=True,
-            verify_integrity=True
+        # Check if product already exists
+        if produto in st.session_state.df_compras['Produto'].values:
+            # Update quantity and price for existing product
+            idx = st.session_state.df_compras['Produto'] == produto
+            st.session_state.df_compras.loc[idx, 'Quantidade'] += quantidade
+            st.session_state.df_compras.loc[idx, 'Preco'] = (
+                st.session_state.df_compras.loc[idx, 'Quantidade'] * 
+                st.session_state.df_compras.loc[idx, 'Preco_Unitario']
+            )
+        else:
+            # Add new product
+            st.session_state.df_compras = pd.concat(
+                [st.session_state.df_compras, nova_compra], 
+                ignore_index=True,
+                verify_integrity=True
+            )
+
+def Remove_Item_Carrinho(index):
+    st.session_state.df_compras = st.session_state.df_compras.drop(index).reset_index(drop=True)
+
+def Update_Item_Quantity(index, change):
+    current_qty = st.session_state.df_compras.loc[index, 'Quantidade']
+    new_qty = current_qty + change
+    
+    if new_qty <= 0:
+        # Remove item if quantity becomes 0 or negative
+        st.session_state.df_compras = st.session_state.df_compras.drop(index).reset_index(drop=True)
+    else:
+        # Update quantity and recalculate total price
+        st.session_state.df_compras.loc[index, 'Quantidade'] = new_qty
+        st.session_state.df_compras.loc[index, 'Preco'] = (
+            new_qty * st.session_state.df_compras.loc[index, 'Preco_Unitario']
         )
 
 def Escreve_Compras():
     st.subheader("Carrinho de Compras:")
     if not st.session_state.df_compras.empty:
-        st.dataframe(st.session_state.df_compras,hide_index=True)
+        # Ensure all required columns exist
+        required_columns = ["Nome", "Produto", "Quantidade", "Preco_Unitario", "Preco"]
+        missing_columns = [col for col in required_columns if col not in st.session_state.df_compras.columns]
+        
+        if missing_columns:
+            # If Preco_Unitario is missing, calculate it from Preco and Quantidade
+            if "Preco_Unitario" in missing_columns:
+                st.session_state.df_compras["Preco_Unitario"] = st.session_state.df_compras["Preco"] / st.session_state.df_compras["Quantidade"]
+        
+        # Sort by product name for better organization
+        df_sorted = st.session_state.df_compras.sort_values('Produto')
+        
+        for idx, row in df_sorted.iterrows():
+            col1, col2, col3, col4 = st.columns([3, 0.5, 0.5, 0.5])
+            with col1:
+                st.text(f"{row['Quantidade']}x {row['Produto']} (R$ {row['Preco_Unitario']:.2f} cada) - Total: R$ {row['Preco']:.2f}")
+            with col2:
+                # Only show minus button if quantity > 1
+                if row['Quantidade'] > 1:
+                    if st.button("➖", key=f"minus_{idx}"):
+                        Update_Item_Quantity(idx, -1)
+                        st.rerun()
+            with col3:
+                if st.button("➕", key=f"plus_{idx}"):
+                    Update_Item_Quantity(idx, 1)
+                    st.rerun()
+            with col4:
+                if st.button("🗑️", key=f"delete_{idx}"):
+                    Remove_Item_Carrinho(idx)
+                    st.rerun()
+        
         Valor_Gasto = np.sum(st.session_state.df_compras['Preco'])
         st.subheader(f"Gasto Total **{Valor_Gasto:.2f}**")
     else:
@@ -172,14 +236,15 @@ def Escreve_Compras():
 def Verifica_Compras_No_Session_State():
     if 'df_compras' not in st.session_state:
         st.session_state.df_compras = pd.DataFrame(
-            columns=["Nome", "Produto", "Quantidade", "Preco"])
+            columns=["Nome", "Produto", "Quantidade", "Preco_Unitario", "Preco"])
         return st.session_state.df_compras
 
 def Cancela_Compras():
     st.session_state.Cancelando = True
     st.session_state.df_compras = pd.DataFrame(
-        columns=["Nome", "Produto", "Quantidade", "Preco"])
+        columns=["Nome", "Produto", "Quantidade", "Preco_Unitario", "Preco"])
     switch_page("Tela_Nome")
+
 def Finaliza_Compra(df, FlagPagamento):
     st.session_state.Cancelando = True
     if 'travaDuploClick' not in st.session_state:
@@ -200,8 +265,7 @@ def Finaliza_Compra(df, FlagPagamento):
     
 def Envia_Dados_BD(df, FlagPagamento):
     datahora = datetime.now()
-    data = datetime.now().date()
-    datapagamento = data if FlagPagamento == 'Sim' else None
+    datapagamento = datahora if FlagPagamento == 'Sim' else None
     conn = get_postgres_conn()
     
     with conn.session as session:
@@ -212,7 +276,7 @@ def Envia_Dados_BD(df, FlagPagamento):
                 VALUES (:data, :nome, :produto, :qtd, :valor, :pago, :data_pagamento, :registro)
             """)
             session.execute(query, {
-                "data": data,
+                "data": datahora,
                 "nome": row['Nome'],
                 "produto": row['Produto'],
                 "qtd": row['Quantidade'],
