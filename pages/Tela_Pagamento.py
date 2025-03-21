@@ -181,5 +181,5 @@ try:
 except Exception as e:
     st.title('Ops, erro no sistema')
     st.text('Voltando a página inicial')
-    #time.sleep(2)
-    #switch_page("Tela_Nome")
+    time.sleep(2)
+    switch_page("Tela_Nome")

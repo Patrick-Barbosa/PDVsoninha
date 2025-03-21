@@ -27,6 +27,8 @@ def Obtem_Preco_Banco():
         'data', ascending=False).drop_duplicates('produto')
     df_precos['Filtro'] = df_precos['produto'] + \
         ' - R$: ' + df_precos['valor'].astype(str)
+    df_precos = df_precos.sort_values(
+        'produto', ascending=True)
     return df_precos
 
 
@@ -77,7 +79,7 @@ def Tela_Compra():
             product_input = st.selectbox(
                 "Selecione o produto consumido",
                 df_precos['Filtro'] if not use_category_filter else df_precos.query(
-                    "Categoria==@category_input")['Filtro'],
+                    "categoria==@category_input")['Filtro'],
                 key='product',
                 index=None,
                 placeholder='Selecione o produto'
