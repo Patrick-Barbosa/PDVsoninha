@@ -57,7 +57,7 @@ def Tela_Conclusao():
                                 ["Sim", "Não"],
                                 index=1, key='flagPagamento2')
         
-        col1, col2, col3, col4,col5,col6 = st.columns(6)
+        col1, col2, col3, col4 = st.columns(4)
         if widgetPagamento != st.session_state.flagPagamento:
             st.session_state.flagPagamento = widgetPagamento
             st.rerun()
@@ -118,8 +118,7 @@ def Cancela_Compras():
 
 def Envia_Dados_BD(df, FlagPagamento):
     datahora = datetime.now()
-    data = datetime.now().date()
-    datapagamento = data if FlagPagamento == 'Sim' else None
+    datapagamento = datahora if FlagPagamento == 'Sim' else None
     
     conn = get_postgres_conn()
     with conn.session as session:
@@ -129,7 +128,7 @@ def Envia_Dados_BD(df, FlagPagamento):
                 VALUES (:data, :nome, :produto, :qtd, :valor, :pago, :data_pagamento, :registro)
             """)
             session.execute(query, {
-                "data": data,
+                "data": datahora,  # Changed from data to datahora
                 "nome": row['Nome'],
                 "produto": row['Produto'],
                 "qtd": row['Quantidade'],

@@ -7,9 +7,6 @@ from streamlit_extras.switch_page_button import switch_page
 from db_config import get_postgres_conn
 from sqlalchemy import text
 
-# Define schema
-SCHEMA = st.secrets["schema"]
-
 st.markdown(
     """
     <style>
@@ -38,7 +35,7 @@ def des(key):
 def base(nomeCliente):
     try:
         conn = get_postgres_conn()
-        df = conn.query(f"SELECT * FROM {SCHEMA}.fvendas WHERE nome = '{nomeCliente}'", ttl = 0)
+        df = conn.query(f"SELECT * FROM dev.fvendas WHERE nome = '{nomeCliente}'", ttl = 0)
         return df
     except Exception as e:
         print("Database Error:", e)
@@ -47,8 +44,8 @@ def atualizar(base):
     conn = get_postgres_conn()
     with conn.session as session:
         for index, row in base.iterrows():
-            query = text(f"""
-                UPDATE {SCHEMA}.fvendas 
+            query = text("""
+                UPDATE dev.fvendas 
                 SET data = :data, 
                     nome = :nome, 
                     produto = :produto, 
@@ -165,7 +162,7 @@ try:
                 st.error('❌ Nenhuma linha foi selecionada.')
             else:
                 df_nao_pago.update(df_editavel)
-                hoje = datetime.now().strftime('%Y-%m-%d')
+                hoje = datetime.now()  # Changed from datetime.now().strftime('%Y-%m-%d')
                 df_nao_pago.loc[(df_nao_pago['pago'] == True) & (df_nao_pago['data_pagamento'].isnull() | (df_nao_pago['data_pagamento'] == '')), 'data_pagamento'] = hoje
                 atualizar(df_nao_pago)
                 st.success('Dados atualizados!')
@@ -184,5 +181,5 @@ try:
 except Exception as e:
     st.title('Ops, erro no sistema')
     st.text('Voltando a página inicial')
-    time.sleep(2)
-    switch_page("Tela_Nome")
+    #time.sleep(2)
+    #switch_page("Tela_Nome")
