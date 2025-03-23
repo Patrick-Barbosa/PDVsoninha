@@ -6,7 +6,7 @@ from streamlit_extras.switch_page_button import switch_page
 import time
 import threading
 from datetime import datetime
-from db_config import get_postgres_conn
+from utils import get_postgres_conn, md_personalization
 from sqlalchemy import text
 
 st.session_state.travaDuploClick = 0
@@ -28,23 +28,10 @@ def Obtem_Preco_Banco():
 def Tela_Compra():
     try:
         st.markdown(
-            """
-        <style>
-        [data-testid="collapsedControl"] {
-            display: none
-        }
-        footer {
-            visibility: hidden;
-        }
-        footer:before{
-            content: '🧠 Feito por João, Hugo & Patrick';
-            visibility: visible;
-            display: block;
-        }
-        </style>
-        """,
+            md_personalization(),
             unsafe_allow_html=True,
         )
+
 
         Verifica_Compras_No_Session_State()
         if 'name' not in st.session_state:
@@ -129,7 +116,7 @@ def Tela_Compra():
         print(e)
         st.write(e)
         time.sleep(2)
-        #switch_page("Tela_Nome")
+        switch_page("Tela_Nome")
     
 
 
@@ -210,9 +197,9 @@ def Escreve_Compras():
         df_sorted = st.session_state.df_compras.sort_values('Produto')
         
         for idx, row in df_sorted.iterrows():
-            col1, col2, col3, col4 = st.columns([3, 0.5, 0.5, 0.5])
+            col1, col2, col3, col4 = st.columns([4, 0.5, 0.5, 0.5])
             with col1:
-                st.text(f"{row['Quantidade']}x {row['Produto']} (R$ {row['Preco_Unitario']:.2f} cada) - Total: R$ {row['Preco']:.2f}")
+                st.write(f"{row['Quantidade']}x {row['Produto']} - R\$ {row['Preco_Unitario']:.2f}: **Total: R$ {row['Preco']:.2f}**")
             with col2:
                 # Only show minus button if quantity > 1
                 if row['Quantidade'] > 1:
