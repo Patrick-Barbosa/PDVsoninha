@@ -4,27 +4,13 @@ from datetime import datetime
 import pandas as pd
 import time
 from streamlit_extras.switch_page_button import switch_page
-from db_config import get_postgres_conn
+from utils import get_postgres_conn, md_personalization
 from sqlalchemy import text
 
 st.markdown(
-    """
-    <style>
-    [data-testid="collapsedControl"] {
-        display: none
-    }
-    footer {
-        visibility: hidden;
-    }
-    footer:before{
-        content: '🧠 Feito por João, Hugo & Patrick';
-        visibility: visible;
-        display: block;
-    }
-    </style>
-    """,
+    md_personalization(),
     unsafe_allow_html=True,
-    )
+)
 
 def des(key):
     if st.session_state.get(key) == None:

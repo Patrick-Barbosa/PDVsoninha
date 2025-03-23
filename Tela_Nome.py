@@ -1,7 +1,8 @@
 import pandas as pd
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
-from db_config import get_postgres_conn
+from utils import get_postgres_conn, md_personalization
+
 
 def Nomes():
     conn = get_postgres_conn()
@@ -20,18 +21,7 @@ def tela_inicial():
         """
     })
     st.markdown(
-        """
-    <style>
-    [data-testid="stSidebarCollapsedControl"] {
-        display: none
-    }
-    footer:before{
-        content: '🧠 Feito por João, Hugo & Patrick';
-        visibility: visible;
-        display: block;
-    }
-    </style>
-    """,
+        md_personalization(),
         unsafe_allow_html=True,
     )
     nomes = Nomes()

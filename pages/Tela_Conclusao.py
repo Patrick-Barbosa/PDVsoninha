@@ -5,7 +5,7 @@ import pandas as pd
 import time
 from streamlit_extras.switch_page_button import switch_page
 import threading
-from db_config import get_postgres_conn
+from utils import get_postgres_conn, md_personalization
 from sqlalchemy import text
 
 schema = st.secrets["schema"]
@@ -16,21 +16,7 @@ def Tela_Conclusao():
         st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
 
         st.markdown(
-            """
-        <style>
-        [data-testid="collapsedControl"] {
-            display: none
-        }
-        footer {
-            visibility: hidden;
-        }
-        footer:before{
-            content: '🧠 Feito por João, Hugo & Patrick';
-            visibility: visible;
-            display: block;
-        }
-        </style>
-        """,
+            md_personalization(),
             unsafe_allow_html=True,
         )
         
