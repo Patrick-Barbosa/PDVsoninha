@@ -27,6 +27,8 @@ def Obtem_Preco_Banco():
 
 def Tela_Compra():
     try:
+        st.session_state.telefone = 0 
+        
         st.markdown(
             md_personalization(),
             unsafe_allow_html=True,
