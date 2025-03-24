@@ -32,11 +32,11 @@ def update_phone(nome, telefone):
 
 
 def validate_phone(phone):
-    # Convert to string to check length
-    if len(str(phone)) > 11:
-        return False
-    else:
+    # check if is between 8 and 11 digits:
+    if len(str(phone)) >= 8 and len(str(phone)) <= 11:
         return True
+    else:
+        return False
     
 
 @st.dialog("Precisamos do seu número de telefone")
