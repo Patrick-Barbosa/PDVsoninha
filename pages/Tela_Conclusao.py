@@ -13,7 +13,7 @@ schema = st.secrets["schema"]
 def Tela_Conclusao():
     try:
         # Define a configuração de página para usar o layout wide por padrão
-        st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
+        st.set_page_config(initial_sidebar_state="collapsed")
 
         st.markdown(
             md_personalization(),

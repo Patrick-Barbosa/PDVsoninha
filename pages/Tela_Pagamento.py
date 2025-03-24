@@ -12,6 +12,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+schema = st.secrets["schema"]
+
 def des(key):
     if st.session_state.get(key) == None:
         return False
@@ -21,7 +23,7 @@ def des(key):
 def base(nomeCliente):
     try:
         conn = get_postgres_conn()
-        df = conn.query(f"SELECT * FROM dev.fvendas WHERE nome = '{nomeCliente}'", ttl = 0)
+        df = conn.query(f"SELECT * FROM {schema}.fvendas WHERE nome ILIKE '{nomeCliente}'", ttl = 0)
         return df
     except Exception as e:
         print("Database Error:", e)
@@ -30,8 +32,8 @@ def atualizar(base):
     conn = get_postgres_conn()
     with conn.session as session:
         for index, row in base.iterrows():
-            query = text("""
-                UPDATE dev.fvendas 
+            query = text(f"""
+                UPDATE {schema}.fvendas 
                 SET data = :data, 
                     nome = :nome, 
                     produto = :produto, 
@@ -167,5 +169,5 @@ try:
 except Exception as e:
     st.title('Ops, erro no sistema')
     st.text('Voltando a página inicial')
-    #time.sleep(2)
-    #switch_page("Tela_Nome")
+    time.sleep(2)
+    switch_page("Tela_Nome")
